@@ -12,8 +12,11 @@
   },
   "devDependencies": {
     "browserify": "^11.0.1",
+    "faucet": "0.0.1",
     "git-guppy": "^1.0.0",
     "gulp-jshint": "^1.11.2",
+    "gulp-shell": "^0.4.2",
+    "gulp-tape": "0.0.1",
     "guppy-pre-commit": "^0.2.1",
     "tape": "^4.2.0",
     "vinyl-source-stream": "^1.1.0"

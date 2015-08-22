@@ -28,7 +28,7 @@ DepressionTest.prototype = {
     },
 
     pretty: function() {
-
+        
     },
 };
 
