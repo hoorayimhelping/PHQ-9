@@ -1,0 +1,22 @@
+{
+  "name": "quartet",
+  "version": "0.0.1",
+  "description": "A non-functional react interface that implements the PHQ-9 depression screen test",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "browserify": "^11.0.1",
+    "git-guppy": "^1.0.0",
+    "gulp": "^3.9.0",
+    "guppy-pre-commit": "^0.2.1"
+  },
+  "devDependencies": {
+    "browserify": "^11.0.1",
+    "git-guppy": "^1.0.0",
+    "guppy-pre-commit": "^0.2.1"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Bucky Schwarz",
+  "license": "MIT"
+}
