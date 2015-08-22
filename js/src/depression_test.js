@@ -4,7 +4,7 @@ var DepressionTest = function() {
         'mild': [5, 9],
         'moderate': [10, 14],
         'moderately-severe': [15, 19],
-        'severe': [20-27]
+        'severe': [20, 27]
     };
 
     this.pretty_range = {
@@ -17,9 +17,19 @@ var DepressionTest = function() {
 };
 
 DepressionTest.prototype = {
-    score: function() {
-        return 42;
-    }
+    score: function(score) {
+        for (var range in this.range) {
+            if (score >= this.range[range][0] && score <= this.range[range][1]) {
+                return range;
+            }
+        }
+
+        throw "I couldn't find " + score + " in my range of values. Sorry";
+    },
+
+    pretty: function() {
+
+    },
 };
 
 module.exports = DepressionTest;
