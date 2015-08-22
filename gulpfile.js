@@ -1,12 +1,9 @@
 var gulp = require('gulp');
-
 var jshint = require('gulp-jshint');
-
 var source = require('vinyl-source-stream');
-
 var browserify = require('browserify');
 
-var js_path = './js/';
+var js_path = './js/src/';
 
 gulp.task('lint', function() {
     return gulp.src(js_path + '*.js')
