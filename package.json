@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "A non-functional react interface that implements the PHQ-9 depression screen test",
   "main": "gulpfile.js",
+  "repository": "git@github.com:hoorayimhelping/PHQ-9.git",
   "dependencies": {
     "browserify": "^11.0.1",
     "git-guppy": "^1.0.0",
@@ -14,6 +15,7 @@
     "git-guppy": "^1.0.0",
     "gulp-jshint": "^1.11.2",
     "guppy-pre-commit": "^0.2.1",
+    "tape": "^4.2.0",
     "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {
