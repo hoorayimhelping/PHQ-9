@@ -37,6 +37,6 @@ gulp.task('build', function() {
         .pipe(gulp.dest(paths.js_dist));
 });
 
-gulp.task('default', ['lint', 'test', 'build']);
+gulp.task('default', ['transform', 'lint', 'test', 'build']);
 
 gulp.task('pre-commit', ['default']);
