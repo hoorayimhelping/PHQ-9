@@ -23,7 +23,7 @@ gulp.task('test', shell.task([
 gulp.task('build', function() {
     return browserify(js_src + 'main.js')
         .bundle()
-        .pipe(source('../app.js'))
+        .pipe(source('../../app.js'))
         .pipe(gulp.dest(js_src))
 });
 
