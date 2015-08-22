@@ -14,6 +14,12 @@ var DepressionTest = function() {
         'moderately-severe': 'Moderately Severe',
         'severe': 'Severe'
     };
+
+    this.answers = [];
+    for (var i = 0; i < 9; i++) {
+        this.answers.push(0);
+    }
+    console.log(this.answers);
 };
 
 DepressionTest.prototype = {
