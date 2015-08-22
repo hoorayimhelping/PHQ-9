@@ -1,1 +1,3 @@
-console.log('test.js!');
+module.exports = function() {
+    console.log('test.js!');
+};

@@ -13,7 +13,8 @@
     "browserify": "^11.0.1",
     "git-guppy": "^1.0.0",
     "gulp-jshint": "^1.11.2",
-    "guppy-pre-commit": "^0.2.1"
+    "guppy-pre-commit": "^0.2.1",
+    "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {
     "test": "test"
