@@ -4,6 +4,7 @@ var source = require('vinyl-source-stream');
 var browserify = require('browserify');
 var shell = require('gulp-shell');
 var react = require('gulp-react');
+var reactify = require('reactify');
 
 var paths = {
     'js_source': 'js/src/',
@@ -31,12 +32,15 @@ gulp.task('test', shell.task([
 ]));
 
 gulp.task('build', function() {
-    return browserify(paths.js_source + 'main.js')
+    return browserify({
+            entries: [paths.js_source + 'main.js'],
+            transform: [reactify]
+        })
         .bundle()
         .pipe(source('app.js'))
         .pipe(gulp.dest(paths.js_dist));
 });
 
-gulp.task('default', ['transform', 'lint', 'test', 'build']);
+gulp.task('default', ['lint', 'test', 'build']);
 
 gulp.task('pre-commit', ['default']);
