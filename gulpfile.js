@@ -9,21 +9,19 @@ var browserify = require('browserify');
 var js_path = './js/';
 
 gulp.task('lint', function() {
-    console.log('lint!');
-
-    return gulp.src(js_path + '.js*')
-    .pipe(jshint());
+    return gulp.src(js_path + '*.js')
+    .pipe(jshint())
+    .pipe(jshint.reporter('default', { verbose: true }))
+    .pipe(jshint.reporter('fail'));
 });
 
 gulp.task('build', function() {
-    console.log('build');
-
     return browserify(js_path + 'main.js')
         .bundle()
-        .pipe(source('built.js'))
+        .pipe(source('../app.js'))
         .pipe(gulp.dest(js_path))
 });
 
-gulp.task('default', ['lint'])
+gulp.task('default', ['lint', 'build'])
 
 gulp.task('pre-commit', ['default']);
