@@ -1,8 +1,6 @@
-'use strict';
-
 var test = require('tape');
 var DepressionTest = require('../src/depression_test');
-var depression_test = new DepressionTest;
+var depression_test = new DepressionTest();
 
 test("when calculating the score", function(t) {
     test("when the score is out of range", function(t) {
