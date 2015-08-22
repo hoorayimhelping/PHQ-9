@@ -25,6 +25,6 @@ gulp.task('build', function() {
         .pipe(gulp.dest(js_src))
 });
 
-gulp.task('default', ['lint', 'build'])
+gulp.task('default', ['lint', 'test', 'build'])
 
 gulp.task('pre-commit', ['default']);
