@@ -1,3 +1,5 @@
+'use strict';
+
 var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 var source = require('vinyl-source-stream');
@@ -15,7 +17,7 @@ gulp.task('lint', function() {
 });
 
 gulp.task('test', shell.task([
-  'tape js/spec/* | faucet',
+    'tape js/spec/* | faucet',
 ]));
 
 gulp.task('build', function() {

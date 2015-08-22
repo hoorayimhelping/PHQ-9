@@ -25,11 +25,7 @@ DepressionTest.prototype = {
         }
 
         throw "I couldn't find " + score + " in my range of values. Sorry";
-    },
-
-    pretty: function() {
-        
-    },
+    }
 };
 
 module.exports = DepressionTest;

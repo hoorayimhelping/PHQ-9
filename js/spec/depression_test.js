@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 var DepressionTest = require('../src/depression_test');
 var depression_test = new DepressionTest;
