@@ -19,6 +19,7 @@
     "gulp-react": "^3.0.1",
     "gulp-shell": "^0.4.2",
     "gulp-tape": "0.0.1",
+    "gulp-uglify": "^1.2.0",
     "guppy-pre-commit": "^0.2.1",
     "react": "^0.13.3",
     "reactify": "^1.1.1",
