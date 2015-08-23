@@ -24,8 +24,9 @@ var handleClick = function(event) {
 var RankingForm = React.createClass({
     render: function()  {
         var depression_form = this.props.questions.map(function(question, i) {
+            var key = question.name + ("" + i);
             return (
-                <Ranking name={question.name} order={i} question={question.text} />
+                <Ranking name={question.name} order={i} question={question.text} key={key} />
             );
         });
 
