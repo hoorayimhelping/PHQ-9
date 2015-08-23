@@ -17,14 +17,15 @@ var questions = [
     { text: "Thoughts that you would be better off dead, or of hurting yourself in some way?", name: "suicidal" }
 ];
 
-var handleClick = function(event) {
-    console.log(event);
+var tallyUp = function(event) {
+    event.preventDefault();
+    console.log('tally up ', event);
 };
 
 var RankingForm = React.createClass({
     render: function()  {
         var depression_form = this.props.questions.map(function(question, i) {
-            var key = question.name + ("" + i);
+            var key = question.name + "-" + i;
             return (
                 <Ranking name={question.name} order={i} question={question.text} key={key} />
             );
@@ -33,6 +34,7 @@ var RankingForm = React.createClass({
         return (
             <form>
                 {depression_form}
+                <input type="submit" value="Estimate the severity of your depression" onClick={tallyUp} />
             </form>
         );
     }
