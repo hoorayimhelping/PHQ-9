@@ -44,11 +44,15 @@ var score = new DepressionScore();
 
 var Ranking = require('./views/ranking.jsx');
 
+var handleClick = function(event) {
+    console.log(event);
+};
+
 var RankingForm = React.createClass({displayName: "RankingForm",
     render: function()  {
         return (
             React.createElement("form", null, 
-                React.createElement(Ranking, {name: "pencilvester", order: "0", question: "Little interest or pleasure in doing things", type: "radio"}), 
+                React.createElement(Ranking, {name: "pencilvester", order: "0", question: "Little interest or pleasure in doing things", type: "radio", onClick: handleClick}), 
                 React.createElement(Ranking, {name: "pencilvester", order: "1", question: "Feeling down, depressed, or hopeless?", type: "radio"}), 
                 React.createElement(Ranking, {name: "pencilvester", order: "2", question: "Trouble falling or staying asleep, or sleeping too much?", type: "radio"}), 
                 React.createElement(Ranking, {name: "pencilvester", order: "3", question: "Feeling tired or having little energy?", type: "radio"}), 
@@ -77,9 +81,9 @@ module.exports = React.createClass({displayName: "exports",
         ];
 
         return (
-            React.createElement("div", null, 
+            React.createElement("fieldset", null, 
                 React.createElement("p", null, this.props.question), 
-                React.createElement("input", {name: this.props.name, id: ids[0], type: "radio"}), React.createElement("label", {htmlFor: ids[0]}, "Not at all"), 
+                React.createElement("input", {name: this.props.name, id: ids[0], type: "radio", onClick: this.props.onClick}), React.createElement("label", {htmlFor: ids[0]}, "Not at all"), 
                 React.createElement("input", {name: this.props.name, id: ids[1], type: "radio"}), React.createElement("label", {htmlFor: ids[1]}, "Several Days"), 
                 React.createElement("input", {name: this.props.name, id: ids[2], type: "radio"}), React.createElement("label", {htmlFor: ids[2]}, "More than Half the Days"), 
                 React.createElement("input", {name: this.props.name, id: ids[3], type: "radio"}), React.createElement("label", {htmlFor: ids[3]}, "Nearly Every Day")
