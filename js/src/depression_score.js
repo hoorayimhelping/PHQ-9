@@ -40,8 +40,17 @@ DepressionScore.prototype = {
     },
 
     setAnswer: function(i, value) {
+        value = Math.max(0, Math.min(value, 3));
         this.questions[i].score = value;
-    }
+    },
+
+    sum: function() {
+        return this.questions.map(function(question) {
+            return question.score;
+        }).reduce(function(previous_score, current_score, i) {
+            return previous_score + current_score;
+        });
+    },
 };
 
 module.exports = DepressionScore;

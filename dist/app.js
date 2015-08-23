@@ -41,8 +41,17 @@ DepressionScore.prototype = {
     },
 
     setAnswer: function(i, value) {
+        value = Math.max(0, Math.min(value, 3));
         this.questions[i].score = value;
-    }
+    },
+
+    sum: function() {
+        return this.questions.map(function(question) {
+            return question.score;
+        }).reduce(function(previous_score, current_score, i) {
+            return previous_score + current_score;
+        });
+    },
 };
 
 module.exports = DepressionScore;
@@ -57,13 +66,11 @@ var Ranking = require('./views/ranking.jsx');
 
 var tallyUp = function(event) {
     event.preventDefault();
-    console.log('tally up ', event);
 };
 
 var RankingForm = React.createClass({displayName: "RankingForm",
     handleClick: function(i, event) {
         score.setAnswer(i, event.target.value);
-console.log(score.questions);
     },
 
     render: function()  {
