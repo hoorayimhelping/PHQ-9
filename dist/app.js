@@ -48,7 +48,15 @@ var RankingForm = React.createClass({displayName: "RankingForm",
     render: function()  {
         return (
             React.createElement("form", null, 
-                React.createElement(Ranking, {question: "pencilvester", type: "radio"})
+                React.createElement(Ranking, {name: "pencilvester", order: "0", question: "Little interest or pleasure in doing things", type: "radio"}), 
+                React.createElement(Ranking, {name: "pencilvester", order: "1", question: "Feeling down, depressed, or hopeless?", type: "radio"}), 
+                React.createElement(Ranking, {name: "pencilvester", order: "2", question: "Trouble falling or staying asleep, or sleeping too much?", type: "radio"}), 
+                React.createElement(Ranking, {name: "pencilvester", order: "3", question: "Feeling tired or having little energy?", type: "radio"}), 
+                React.createElement(Ranking, {name: "pencilvester", order: "4", question: "Poor appetite or overeating?", type: "radio"}), 
+                React.createElement(Ranking, {name: "pencilvester", order: "5", question: "Feeling bad about yourself - or that you are a failure or have let yourself or your family down?", type: "radio"}), 
+                React.createElement(Ranking, {name: "pencilvester", order: "6", question: "Trouble concentrating on things, such as reading the newspaper or watching television?", type: "radio"}), 
+                React.createElement(Ranking, {name: "pencilvester", order: "7", question: "Moving or speaking so slowly that other people could have noticed? Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual?", type: "radio"}), 
+                React.createElement(Ranking, {name: "pencilvester", order: "8", question: "Thoughts that you would be better off dead, or of hurting yourself in some way?", type: "radio"})
             )
         );
     }
@@ -62,18 +70,19 @@ var React = require('react');
 module.exports = React.createClass({displayName: "exports",
     render: function()  {
         var ids = [
-            this.props.question + '-' + 0,
-            this.props.question + '-' + 1,
-            this.props.question + '-' + 2,
-            this.props.question + '-' + 3,
+            this.props.name + '-' + 0,
+            this.props.name + '-' + 1,
+            this.props.name + '-' + 2,
+            this.props.name + '-' + 3,
         ];
 
         return (
             React.createElement("div", null, 
-                React.createElement("input", {name: this.props.question, id: ids[0], type: "radio"}), React.createElement("label", {htmlFor: ids[0]}, "Not at all"), 
-                React.createElement("input", {name: this.props.question, id: ids[1], type: "radio"}), React.createElement("label", {htmlFor: ids[1]}, "Several Days"), 
-                React.createElement("input", {name: this.props.question, id: ids[2], type: "radio"}), React.createElement("label", {htmlFor: ids[2]}, "More than Half the Days"), 
-                React.createElement("input", {name: this.props.question, id: ids[3], type: "radio"}), React.createElement("label", {htmlFor: ids[3]}, "Nearly Every Day")
+                React.createElement("p", null, this.props.question), 
+                React.createElement("input", {name: this.props.name, id: ids[0], type: "radio"}), React.createElement("label", {htmlFor: ids[0]}, "Not at all"), 
+                React.createElement("input", {name: this.props.name, id: ids[1], type: "radio"}), React.createElement("label", {htmlFor: ids[1]}, "Several Days"), 
+                React.createElement("input", {name: this.props.name, id: ids[2], type: "radio"}), React.createElement("label", {htmlFor: ids[2]}, "More than Half the Days"), 
+                React.createElement("input", {name: this.props.name, id: ids[3], type: "radio"}), React.createElement("label", {htmlFor: ids[3]}, "Nearly Every Day")
             )
         );
     }
