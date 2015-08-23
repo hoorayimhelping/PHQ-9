@@ -44,29 +44,39 @@ var score = new DepressionScore();
 
 var Ranking = require('./views/ranking.jsx');
 
+var questions = [
+    { text: "Little interest or pleasure in doing things", name: "no_interest" },
+    { text: "Feeling down, depressed, or hopeless?", name: "feeling_down" },
+    { text: "Trouble falling or staying asleep, or sleeping too much?", name: "sleep" },
+    { text: "Feeling tired or having little energy?", name: "no_energy" },
+    { text: "Poor appetite or overeating?", name: "appetite" },
+    { text: "Feeling bad about yourself - or that you are a failure or have let yourself or your family down?", name: "self_esteem" },
+    { text: "Trouble concentrating on things, such as reading the newspaper or watching television?", name: "concentration" },
+    { text: "Moving or speaking so slowly that other people could have noticed? Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual?", name: "restless" },
+    { text: "Thoughts that you would be better off dead, or of hurting yourself in some way?", name: "suicidal" }
+];
+
 var handleClick = function(event) {
     console.log(event);
 };
 
 var RankingForm = React.createClass({displayName: "RankingForm",
     render: function()  {
+        var depression_form = this.props.questions.map(function(question, i) {
+            return (
+                React.createElement(Ranking, {name: question.name, order: i, question: question.text})
+            );
+        });
+
         return (
             React.createElement("form", null, 
-                React.createElement(Ranking, {name: "pencilvester", order: "0", question: "Little interest or pleasure in doing things", type: "radio", onClick: handleClick}), 
-                React.createElement(Ranking, {name: "pencilvester", order: "1", question: "Feeling down, depressed, or hopeless?", type: "radio"}), 
-                React.createElement(Ranking, {name: "pencilvester", order: "2", question: "Trouble falling or staying asleep, or sleeping too much?", type: "radio"}), 
-                React.createElement(Ranking, {name: "pencilvester", order: "3", question: "Feeling tired or having little energy?", type: "radio"}), 
-                React.createElement(Ranking, {name: "pencilvester", order: "4", question: "Poor appetite or overeating?", type: "radio"}), 
-                React.createElement(Ranking, {name: "pencilvester", order: "5", question: "Feeling bad about yourself - or that you are a failure or have let yourself or your family down?", type: "radio"}), 
-                React.createElement(Ranking, {name: "pencilvester", order: "6", question: "Trouble concentrating on things, such as reading the newspaper or watching television?", type: "radio"}), 
-                React.createElement(Ranking, {name: "pencilvester", order: "7", question: "Moving or speaking so slowly that other people could have noticed? Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual?", type: "radio"}), 
-                React.createElement(Ranking, {name: "pencilvester", order: "8", question: "Thoughts that you would be better off dead, or of hurting yourself in some way?", type: "radio"})
+                depression_form
             )
         );
     }
 });
 
-React.render(React.createElement(RankingForm, null), document.getElementById('container'));
+React.render(React.createElement(RankingForm, {questions: questions}), document.getElementById('container'));
 
 },{"./depression_score":1,"./views/ranking.jsx":3,"react":159}],3:[function(require,module,exports){
 var React = require('react');
