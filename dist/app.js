@@ -16,10 +16,17 @@ var DepressionScore = function() {
         'severe': 'Severe'
     };
 
-    this.answers = [];
-    for (var i = 0; i < 9; i++) {
-        this.answers.push(0);
-    }
+    this.questions = [
+        { text: "Little interest or pleasure in doing things", name: "no_interest", score: 0 },
+        { text: "Feeling down, depressed, or hopeless?", name: "feeling_down", score: 0 },
+        { text: "Trouble falling or staying asleep, or sleeping too much?", name: "sleep", score: 0 },
+        { text: "Feeling tired or having little energy?", name: "no_energy", score: 0 },
+        { text: "Poor appetite or overeating?", name: "appetite", score: 0 },
+        { text: "Feeling bad about yourself - or that you are a failure or have let yourself or your family down?", name: "self_esteem", score: 0 },
+        { text: "Trouble concentrating on things, such as reading the newspaper or watching television?", name: "concentration", score: 0 },
+        { text: "Moving or speaking so slowly that other people could have noticed? Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual?", name: "restless", score: 0 },
+        { text: "Thoughts that you would be better off dead, or of hurting yourself in some way?", name: "suicidal", score: 0 }
+    ];
 };
 
 DepressionScore.prototype = {
@@ -31,6 +38,10 @@ DepressionScore.prototype = {
         }
 
         throw "I couldn't find " + score + " in my range of values. Sorry";
+    },
+
+    setAnswer: function(i, value) {
+        this.questions[i].score = value;
     }
 };
 
@@ -44,31 +55,23 @@ var score = new DepressionScore();
 
 var Ranking = require('./views/ranking.jsx');
 
-var questions = [
-    { text: "Little interest or pleasure in doing things", name: "no_interest" },
-    { text: "Feeling down, depressed, or hopeless?", name: "feeling_down" },
-    { text: "Trouble falling or staying asleep, or sleeping too much?", name: "sleep" },
-    { text: "Feeling tired or having little energy?", name: "no_energy" },
-    { text: "Poor appetite or overeating?", name: "appetite" },
-    { text: "Feeling bad about yourself - or that you are a failure or have let yourself or your family down?", name: "self_esteem" },
-    { text: "Trouble concentrating on things, such as reading the newspaper or watching television?", name: "concentration" },
-    { text: "Moving or speaking so slowly that other people could have noticed? Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual?", name: "restless" },
-    { text: "Thoughts that you would be better off dead, or of hurting yourself in some way?", name: "suicidal" }
-];
-
 var tallyUp = function(event) {
     event.preventDefault();
     console.log('tally up ', event);
 };
 
 var RankingForm = React.createClass({displayName: "RankingForm",
+    handleClick: function(i, event) {
+        score.setAnswer(i, event.target.value);
+console.log(score.questions);
+    },
+
     render: function()  {
         var depression_form = this.props.questions.map(function(question, i) {
-            var key = question.name + "-" + i;
             return (
-                React.createElement(Ranking, {name: question.name, order: i, question: question.text, key: key})
+                React.createElement(Ranking, {name: question.name, order: i, question: question.text, key: i, onClick: this.handleClick.bind(this, i)})
             );
-        });
+        }, this);
 
         return (
             React.createElement("form", null, 
@@ -79,7 +82,7 @@ var RankingForm = React.createClass({displayName: "RankingForm",
     }
 });
 
-React.render(React.createElement(RankingForm, {questions: questions}), document.getElementById('container'));
+React.render(React.createElement(RankingForm, {questions: score.questions}), document.getElementById('container'));
 
 },{"./depression_score":1,"./views/ranking.jsx":3,"react":159}],3:[function(require,module,exports){
 var React = require('react');
@@ -96,10 +99,10 @@ module.exports = React.createClass({displayName: "exports",
         return (
             React.createElement("fieldset", null, 
                 React.createElement("p", null, this.props.question), 
-                React.createElement("input", {name: this.props.name, id: ids[0], type: "radio", onClick: this.props.onClick}), React.createElement("label", {htmlFor: ids[0]}, "Not at all"), 
-                React.createElement("input", {name: this.props.name, id: ids[1], type: "radio"}), React.createElement("label", {htmlFor: ids[1]}, "Several Days"), 
-                React.createElement("input", {name: this.props.name, id: ids[2], type: "radio"}), React.createElement("label", {htmlFor: ids[2]}, "More than Half the Days"), 
-                React.createElement("input", {name: this.props.name, id: ids[3], type: "radio"}), React.createElement("label", {htmlFor: ids[3]}, "Nearly Every Day")
+                React.createElement("input", {name: this.props.name, id: ids[0], type: "radio", onClick: this.props.onClick, value: "0"}), React.createElement("label", {htmlFor: ids[0]}, "Not at all"), 
+                React.createElement("input", {name: this.props.name, id: ids[1], type: "radio", onClick: this.props.onClick, value: "1"}), React.createElement("label", {htmlFor: ids[1]}, "Several Days"), 
+                React.createElement("input", {name: this.props.name, id: ids[2], type: "radio", onClick: this.props.onClick, value: "2"}), React.createElement("label", {htmlFor: ids[2]}, "More than Half the Days"), 
+                React.createElement("input", {name: this.props.name, id: ids[3], type: "radio", onClick: this.props.onClick, value: "3"}), React.createElement("label", {htmlFor: ids[3]}, "Nearly Every Day")
             )
         );
     }
