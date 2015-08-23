@@ -1,7 +1,7 @@
 var React = require('react');
 
-var DepressionTest = require('./depression_test');
-new DepressionTest();
+var DepressionScore = require('./depression_score');
+var score = new DepressionScore();
 
 var Ranking = require('./views/ranking.jsx');
 

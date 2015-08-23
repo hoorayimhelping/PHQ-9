@@ -1,4 +1,4 @@
-var DepressionTest = function() {
+var DepressionScore = function() {
     this.range = {
         'none': [0, 4],
         'mild': [5, 9],
@@ -21,7 +21,7 @@ var DepressionTest = function() {
     }
 };
 
-DepressionTest.prototype = {
+DepressionScore.prototype = {
     score: function(score) {
         for (var range in this.range) {
             if (score >= this.range[range][0] && score <= this.range[range][1]) {
@@ -33,4 +33,4 @@ DepressionTest.prototype = {
     }
 };
 
-module.exports = DepressionTest;
+module.exports = DepressionScore;
