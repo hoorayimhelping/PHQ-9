@@ -42,19 +42,34 @@ var React = require('react');
 var DepressionTest = require('./depression_test');
 new DepressionTest();
 
-var Helloworld = require('./views/test.jsx');
+var Ranking = require('./views/ranking.jsx');
 
-React.render(React.createElement(Helloworld, {name: "pants"}), document.getElementById('container'));
+var RankingForm = React.createClass({displayName: "RankingForm",
+    render: function()  {
+        return (
+            React.createElement("form", null, 
+                React.createElement(Ranking, {question: "pencilvester", type: "radio"})
+            )
+        );
+    }
+});
 
-console.log("and that's the waaaaaaaaaaayyyyyyy the news goes");
+React.render(React.createElement(RankingForm, null), document.getElementById('container'));
 
-},{"./depression_test":1,"./views/test.jsx":3,"react":159}],3:[function(require,module,exports){
+},{"./depression_test":1,"./views/ranking.jsx":3,"react":159}],3:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({displayName: "exports",
-	render: function() 	{
-		return React.createElement("h1", null, "Hello, ", this.props.name);
-	}
+    render: function()  {
+        return (
+            React.createElement("div", null, 
+                React.createElement("input", {name: this.props.question, type: "radio"}), 
+                React.createElement("input", {name: this.props.question, type: "radio"}), 
+                React.createElement("input", {name: this.props.question, type: "radio"}), 
+                React.createElement("input", {name: this.props.question, type: "radio"})
+            )
+        );
+    }
 });
 
 },{"react":159}],4:[function(require,module,exports){
