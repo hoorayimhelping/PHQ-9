@@ -52,6 +52,10 @@ DepressionScore.prototype = {
         });
     },
 
+    shouldSuggestTherapist: function(score) {
+        return score >= this.range.moderate[0];
+    },
+
     pretty: function(range) {
         return this.pretty_range[range];
     }

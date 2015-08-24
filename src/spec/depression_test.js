@@ -138,3 +138,20 @@ test("when summing the score", function(t) {
 
     t.end();
 });
+
+test("when determining when to show the assessment", function(t) {
+    var score = new DepressionScore();
+    score.range.moderate = [5, 10];
+
+    t.plan(6);
+
+    t.false(score.shouldSuggestTherapist(4), "should return false when the score is less than the lower range of moderate");
+    t.true(score.shouldSuggestTherapist(6), "should return true when the score is greater the lower range of moderage");
+    t.true(score.shouldSuggestTherapist(5), "should return true when the score is equal to the lower range of moderage");
+
+    t.false(score.shouldSuggestTherapist(-1));
+    t.false(score.shouldSuggestTherapist(0));
+    t.true(score.shouldSuggestTherapist(500000));
+
+    t.end();
+});

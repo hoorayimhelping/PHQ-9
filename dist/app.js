@@ -19863,6 +19863,10 @@ DepressionScore.prototype = {
         });
     },
 
+    shouldSuggestTherapist: function(score) {
+        return score >= this.range.moderate[0];
+    },
+
     pretty: function(range) {
         return this.pretty_range[range];
     }
@@ -19886,17 +19890,32 @@ var React = require('react');
 var RankingForm = require('./ranking_form.jsx');
 
 module.exports = React.createClass({displayName: "exports",
+    getInitialState: function() {
+        return { show_assessment: false };
+    },
+
     assess: function(event) {
         event.preventDefault();
-        console.log(this.props.score.pretty(this.props.score.getScore(this.props.score.sum())));
+        var score = this.props.score.getScore(this.props.score.sum());
+        this.setState({
+            'show_assessment': this.props.score.shouldSuggestTherapist(score)
+        });
     },
 
     render: function()  {
-        return (
-            React.createElement("div", null, 
-                React.createElement(RankingForm, {score: this.props.score, assess: this.assess})
+        if (this.state.show_assessment) {
+            return (
+                React.createElement("div", null, 
+                    React.createElement("h1", null, "Sorry bro, you\"re depressed")
+                )
             )
-        );
+        } else {
+            return (
+                React.createElement("div", null, 
+                    React.createElement(RankingForm, {score: this.props.score, assess: this.assess})
+                )
+            );
+        }
     }
 });
 
