@@ -10,7 +10,7 @@ var DepressionScore = function() {
     this.pretty_range = {
         'minimal': 'Minimal',
         'mild': 'Mild',
-        'moderate': 'Moderatge',
+        'moderate': 'Moderate',
         'moderately-severe': 'Moderately Severe',
         'severe': 'Severe'
     };

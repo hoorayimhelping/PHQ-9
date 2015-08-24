@@ -7,11 +7,6 @@ module.exports = React.createClass({
         this.props.score.setAnswer(i, event.target.value);
     },
 
-    assess: function(event) {
-        event.preventDefault();
-        console.log(this.props.score.pretty(this.props.score.getScore(this.props.score.sum())));
-    },
-
     render: function()  {
         var depression_form = this.props.score.questions.map(function(question, i) {
             return (
@@ -22,7 +17,7 @@ module.exports = React.createClass({
         return (
             <form>
                 {depression_form}
-                <input type="submit" value="Estimate the severity of your depression" onClick={this.assess} />
+                <input type="submit" value="Assess the severity of your depression" onClick={this.props.assess} />
             </form>
         );
     }

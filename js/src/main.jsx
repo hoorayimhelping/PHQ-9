@@ -1,8 +1,8 @@
 var React = require('react');
 
-var RankingForm = require('./views/ranking_form.jsx');
+var Assessment = require('./views/assessment.jsx');
 
 var DepressionScore = require('./depression_score');
 var score = new DepressionScore();
 
-React.render(<RankingForm score={score} />, document.getElementById('container'));
+React.render(<Assessment score={score} />, document.getElementById('container'));
