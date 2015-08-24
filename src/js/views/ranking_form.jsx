@@ -17,7 +17,9 @@ module.exports = React.createClass({
         return (
             <form>
                 {depression_form}
-                <input type="submit" value="Assess the severity of your depression" onClick={this.props.assess} />
+                <fieldset>
+                    <input type="submit" value="Assess the severity of your depression" onClick={this.props.assess} />
+                </fieldset>
             </form>
         );
     }
