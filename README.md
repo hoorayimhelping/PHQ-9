@@ -3,7 +3,7 @@ Stories:
 
 2) As a patient, if I score moderate depression or higher, I want to be presented with three options for therapists that I can select from.
 
-Installation:
+##Installation:
 
 ```
 git clone git@github.com:hoorayimhelping/PHQ-9.git
@@ -12,3 +12,14 @@ npm install
 gulp
 open index.html
 ```
+### Run default task (lint, test, build)
+`gulp [default]`
+
+### Run Tests
+`gulp test `
+
+### Link
+`gulp lint`
+
+### Build jsx and browserify require modules
+`gulp build`
