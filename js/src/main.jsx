@@ -7,6 +7,8 @@ var Ranking = require('./views/ranking.jsx');
 
 var tallyUp = function(event) {
     event.preventDefault();
+
+    console.log(score.pretty(score.getScore(score.sum())));
 };
 
 var RankingForm = React.createClass({

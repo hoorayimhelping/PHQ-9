@@ -24,57 +24,57 @@ test("when calculating the score", function(t) {
 
     // this block of tests is intentinally hand-written in the hopes that it's very clear what is being tested
     test("when the score is in range [inclusive]", function(t) {
-        test("when the score is in the range of 0-4, the assessment should be none", function(t) {
+        test("when the score is in the range of 0-4, the assessment should be minimal", function(t) {
             t.plan(5);
 
-            t.equals(score.score(0), 'none');
-            t.equals(score.score(1), 'none');
-            t.equals(score.score(2), 'none');
-            t.equals(score.score(3), 'none');
-            t.equals(score.score(4), 'none');
+            t.equals(score.getScore(0), 'minimal');
+            t.equals(score.getScore(1), 'minimal');
+            t.equals(score.getScore(2), 'minimal');
+            t.equals(score.getScore(3), 'minimal');
+            t.equals(score.getScore(4), 'minimal');
         });
 
         test("when the score is in the range of 5-9, the assessment should be mild", function(t) {
            t.plan(5);
 
-            t.equals(score.score(5), 'mild');
-            t.equals(score.score(6), 'mild');
-            t.equals(score.score(7), 'mild');
-            t.equals(score.score(8), 'mild');
-            t.equals(score.score(9), 'mild');
+            t.equals(score.getScore(5), 'mild');
+            t.equals(score.getScore(6), 'mild');
+            t.equals(score.getScore(7), 'mild');
+            t.equals(score.getScore(8), 'mild');
+            t.equals(score.getScore(9), 'mild');
         });
 
         test("when the score is in the range of 10-14, the assessment should be moderate", function(t) {
            t.plan(5);
 
-            t.equals(score.score(10), 'moderate');
-            t.equals(score.score(11), 'moderate');
-            t.equals(score.score(12), 'moderate');
-            t.equals(score.score(13), 'moderate');
-            t.equals(score.score(14), 'moderate');
+            t.equals(score.getScore(10), 'moderate');
+            t.equals(score.getScore(11), 'moderate');
+            t.equals(score.getScore(12), 'moderate');
+            t.equals(score.getScore(13), 'moderate');
+            t.equals(score.getScore(14), 'moderate');
         });
 
         test("when the score is in the range of 15-19, the assessment should be moderately-severe", function(t) {
            t.plan(5);
 
-            t.equals(score.score(15), 'moderately-severe');
-            t.equals(score.score(16), 'moderately-severe');
-            t.equals(score.score(17), 'moderately-severe');
-            t.equals(score.score(18), 'moderately-severe');
-            t.equals(score.score(19), 'moderately-severe');
+            t.equals(score.getScore(15), 'moderately-severe');
+            t.equals(score.getScore(16), 'moderately-severe');
+            t.equals(score.getScore(17), 'moderately-severe');
+            t.equals(score.getScore(18), 'moderately-severe');
+            t.equals(score.getScore(19), 'moderately-severe');
         });
 
         test("when the score is in the range of 20-27, the assessment should be severe", function(t) {
            t.plan(8);
 
-            t.equals(score.score(20), 'severe');
-            t.equals(score.score(21), 'severe');
-            t.equals(score.score(22), 'severe');
-            t.equals(score.score(23), 'severe');
-            t.equals(score.score(24), 'severe');
-            t.equals(score.score(25), 'severe');
-            t.equals(score.score(26), 'severe');
-            t.equals(score.score(27), 'severe');
+            t.equals(score.getScore(20), 'severe');
+            t.equals(score.getScore(21), 'severe');
+            t.equals(score.getScore(22), 'severe');
+            t.equals(score.getScore(23), 'severe');
+            t.equals(score.getScore(24), 'severe');
+            t.equals(score.getScore(25), 'severe');
+            t.equals(score.getScore(26), 'severe');
+            t.equals(score.getScore(27), 'severe');
         });
 
         t.end();

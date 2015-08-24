@@ -1,7 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var DepressionScore = function() {
     this.range = {
-        'none': [0, 4],
+        'minimal': [0, 4],
         'mild': [5, 9],
         'moderate': [10, 14],
         'moderately-severe': [15, 19],
@@ -9,7 +9,7 @@ var DepressionScore = function() {
     };
 
     this.pretty_range = {
-        'none': 'None',
+        'minimal': 'Minimal',
         'mild': 'Mild',
         'moderate': 'Moderatge',
         'moderately-severe': 'Moderately Severe',
@@ -30,7 +30,7 @@ var DepressionScore = function() {
 };
 
 DepressionScore.prototype = {
-    score: function(score) {
+    getScore: function(score) {
         for (var range in this.range) {
             if (score >= this.range[range][0] && score <= this.range[range][1]) {
                 return range;
@@ -52,6 +52,10 @@ DepressionScore.prototype = {
             return previous_score + current_score;
         });
     },
+
+    pretty: function(range) {
+        return this.pretty_range[range];
+    }
 };
 
 module.exports = DepressionScore;
@@ -66,6 +70,8 @@ var Ranking = require('./views/ranking.jsx');
 
 var tallyUp = function(event) {
     event.preventDefault();
+
+    console.log(score.pretty(score.getScore(score.sum())));
 };
 
 var RankingForm = React.createClass({displayName: "RankingForm",

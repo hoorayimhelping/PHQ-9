@@ -1,6 +1,6 @@
 var DepressionScore = function() {
     this.range = {
-        'none': [0, 4],
+        'minimal': [0, 4],
         'mild': [5, 9],
         'moderate': [10, 14],
         'moderately-severe': [15, 19],
@@ -8,7 +8,7 @@ var DepressionScore = function() {
     };
 
     this.pretty_range = {
-        'none': 'None',
+        'minimal': 'Minimal',
         'mild': 'Mild',
         'moderate': 'Moderatge',
         'moderately-severe': 'Moderately Severe',
@@ -29,7 +29,7 @@ var DepressionScore = function() {
 };
 
 DepressionScore.prototype = {
-    score: function(score) {
+    getScore: function(score) {
         for (var range in this.range) {
             if (score >= this.range[range][0] && score <= this.range[range][1]) {
                 return range;
@@ -51,6 +51,10 @@ DepressionScore.prototype = {
             return previous_score + current_score;
         });
     },
+
+    pretty: function(range) {
+        return this.pretty_range[range];
+    }
 };
 
 module.exports = DepressionScore;
