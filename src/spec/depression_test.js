@@ -1,5 +1,5 @@
 var test = require('tape');
-var DepressionScore = require('../src/depression_score');
+var DepressionScore = require('../js/depression_score');
 
 test("when calculating the score", function(t) {
     var score = new DepressionScore();

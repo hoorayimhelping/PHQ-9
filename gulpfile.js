@@ -8,10 +8,10 @@ var reactify = require('reactify');
 var uglify = require('gulp-uglify');
 
 var paths = {
-    'js_source': 'js/src/',
+    'js_source': 'src/js/',
     'js_dist': 'dist/',
-    'js_test': 'js/spec/',
-    'react_source': 'js/src/views/',
+    'js_test': 'src/spec/',
+    'react_source': 'src/js/views/',
     'react_dist': 'dist/views'
 };
 
