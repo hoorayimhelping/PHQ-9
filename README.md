@@ -3,8 +3,12 @@ Stories:
 
 2) As a patient, if I score moderate depression or higher, I want to be presented with three options for therapists that I can select from.
 
-Usage: 
+Installation:
 
-`open index.html`
-
-`sensible-browser index.html`
+```
+git clone git@github.com:hoorayimhelping/PHQ-9.git
+cd PHQ-9
+npm install
+gulp
+open index.html
+```
