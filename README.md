@@ -18,7 +18,7 @@ open index.html
 ### Run Tests
 `gulp test `
 
-### Link
+### Run Linter (JS Static analysis performed by JSHint)
 `gulp lint`
 
 ### Build jsx and browserify require modules
