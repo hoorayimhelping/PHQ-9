@@ -19867,6 +19867,10 @@ DepressionScore.prototype = {
         return score >= this.range.moderate[0];
     },
 
+    shouldShowAssessment: function(score) {
+        return true;
+    },
+
     pretty: function(range) {
         return this.pretty_range[range];
     }
@@ -19906,7 +19910,10 @@ var TherapistList = require('./therapist_list.jsx');
 
 module.exports = React.createClass({displayName: "exports",
     getInitialState: function() {
-        return { show_assessment: false };
+        return {
+            show_assessment: false,
+            show_therapists: false
+        };
     },
 
     assess: function(event) {
@@ -19915,7 +19922,8 @@ module.exports = React.createClass({displayName: "exports",
         var score = this.props.score.getScore(this.props.score.sum());
 
         this.setState({
-            'show_assessment': this.props.score.shouldSuggestTherapist(score)
+            'show_assessment': this.props.score.shouldShowAssessment(score),
+            'show_therapists': this.props.score.shouldSuggestTherapist(score)
         });
 
     },
@@ -19931,18 +19939,31 @@ module.exports = React.createClass({displayName: "exports",
             )
         );
 
-        var therapists = (
-            React.createElement("div", null, 
-                React.createElement(TherapistList, {therapists: this.props.therapists, handleClick: this.contactTherapist})
-            )
+        var score_assessment = (
+            React.createElement("p", null, "Based on the way you answered, your depression is ", React.createElement("span", {className: "final-assessment"}, this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))))
         );
+
+        var therapists = (
+            React.createElement(TherapistList, {therapists: this.props.therapists, handleClick: this.contactTherapist})
+        );
+
+        var final_assessment = score_assessment;
+
+        if (this.state.show_therapists) {
+            final_assessment = (
+                React.createElement("div", null, 
+                    score_assessment, 
+                    therapists
+                )
+            );
+        }
 
         var final_form;
         if (this.state.show_assessment) {
             final_form = (
                 React.createElement("div", null, 
                     form, 
-                    therapists
+                    final_assessment
                 )
             );
         } else {
