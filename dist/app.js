@@ -19827,15 +19827,15 @@ var DepressionScore = function() {
     };
 
     this.questions = [
-        { text: "Had little interest or pleasure in doing things?", name: "no_interest", score: 0 },
-        { text: "Felt down, depressed, or hopeless?", name: "feeling_down", score: 0 },
-        { text: "Had rouble falling or staying asleep, or sleeping too much?", name: "sleep", score: 0 },
-        { text: "Felt tired or had little energy?", name: "no_energy", score: 0 },
-        { text: "Experienced a poor appetite or overeating?", name: "appetite", score: 0 },
-        { text: "Felt bad about yourself - or that you are a failure or have let yourself or your family down?", name: "self_esteem", score: 0 },
-        { text: "Had trouble concentrating on things, such as reading the newspaper or watching television?", name: "concentration", score: 0 },
-        { text: "Been Moving or speaking so slowly that other people could have noticed? Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual?", name: "restless", score: 0 },
-        { text: "Had thoughts that you would be better off dead, or of hurting yourself in some way?", name: "suicidal", score: 0 }
+        { text: "Had little interest or pleasure in doing things?", name: "no_interest", score: null },
+        { text: "Felt down, depressed or hopeless?", name: "feeling_down", score: null },
+        { text: "Had trouble falling or staying asleep, or sleeping too much?", name: "sleep", score: null },
+        { text: "Felt tired or had little energy?", name: "no_energy", score: null },
+        { text: "Experienced a poor appetite or overeating?", name: "appetite", score: null },
+        { text: "Felt bad about yourself? Or that you are a failure or have let yourself or your family down?", name: "self_esteem", score: null },
+        { text: "Had trouble concentrating on things, such as reading the newspaper or watching television?", name: "concentration", score: null },
+        { text: "Been Moving or speaking so slowly that other people could have noticed? Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual?", name: "restless", score: null },
+        { text: "Had thoughts that you would be better off dead or of hurting yourself in some way?", name: "suicidal", score: null }
     ];
 };
 
@@ -19857,7 +19857,7 @@ DepressionScore.prototype = {
 
     sum: function() {
         return this.questions.map(function(question) {
-            return question.score;
+            return question.score || 0;
         }).reduce(function(previous_score, current_score, i) {
             return previous_score + current_score;
         });
@@ -20005,7 +20005,7 @@ module.exports = React.createClass({displayName: "exports",
                 React.createElement("ul", null, 
                     React.createElement("li", {className: "framing-question"}, React.createElement("p", null, "In the past two weeks have you...")), 
                     React.createElement("li", null, React.createElement("p", null, this.props.question)), 
-                    React.createElement("li", null, React.createElement("input", {defaultChecked: true, name: this.props.name, id: ids[0], type: "radio", onChange: this.props.onChange, value: "0"}), React.createElement("label", {htmlFor: ids[0], style: {backgroundColor: 'hsla(126, 18%, 70%, 1)'}}, "Not at all")), 
+                    React.createElement("li", null, React.createElement("input", {name: this.props.name, id: ids[0], type: "radio", onChange: this.props.onChange, value: "0"}), React.createElement("label", {htmlFor: ids[0], style: {backgroundColor: 'hsla(126, 18%, 70%, 1)'}}, "Not at all")), 
                     React.createElement("li", null, React.createElement("input", {name: this.props.name, id: ids[1], type: "radio", onChange: this.props.onChange, value: "1"}), React.createElement("label", {htmlFor: ids[1], style: {backgroundColor: 'hsla(76, 18%, 70%, 1)'}}, "Several Days")), 
                     React.createElement("li", null, React.createElement("input", {name: this.props.name, id: ids[2], type: "radio", onChange: this.props.onChange, value: "2"}), React.createElement("label", {htmlFor: ids[2], style: {backgroundColor: 'hsla(41, 18%, 70%, 1)'}}, "More than Half the Days")), 
                     React.createElement("li", null, React.createElement("input", {name: this.props.name, id: ids[3], type: "radio", onChange: this.props.onChange, value: "3"}), React.createElement("label", {htmlFor: ids[3], style: {backgroundColor: 'hsla(10, 18%, 70%, 1)'}}, "Nearly Every Day"))

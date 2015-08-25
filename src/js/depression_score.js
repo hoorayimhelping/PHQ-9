@@ -16,15 +16,15 @@ var DepressionScore = function() {
     };
 
     this.questions = [
-        { text: "Had little interest or pleasure in doing things?", name: "no_interest", score: 0 },
-        { text: "Felt down, depressed, or hopeless?", name: "feeling_down", score: 0 },
-        { text: "Had rouble falling or staying asleep, or sleeping too much?", name: "sleep", score: 0 },
-        { text: "Felt tired or had little energy?", name: "no_energy", score: 0 },
-        { text: "Experienced a poor appetite or overeating?", name: "appetite", score: 0 },
-        { text: "Felt bad about yourself - or that you are a failure or have let yourself or your family down?", name: "self_esteem", score: 0 },
-        { text: "Had trouble concentrating on things, such as reading the newspaper or watching television?", name: "concentration", score: 0 },
-        { text: "Been Moving or speaking so slowly that other people could have noticed? Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual?", name: "restless", score: 0 },
-        { text: "Had thoughts that you would be better off dead, or of hurting yourself in some way?", name: "suicidal", score: 0 }
+        { text: "Had little interest or pleasure in doing things?", name: "no_interest", score: null },
+        { text: "Felt down, depressed or hopeless?", name: "feeling_down", score: null },
+        { text: "Had trouble falling or staying asleep, or sleeping too much?", name: "sleep", score: null },
+        { text: "Felt tired or had little energy?", name: "no_energy", score: null },
+        { text: "Experienced a poor appetite or overeating?", name: "appetite", score: null },
+        { text: "Felt bad about yourself? Or that you are a failure or have let yourself or your family down?", name: "self_esteem", score: null },
+        { text: "Had trouble concentrating on things, such as reading the newspaper or watching television?", name: "concentration", score: null },
+        { text: "Been Moving or speaking so slowly that other people could have noticed? Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual?", name: "restless", score: null },
+        { text: "Had thoughts that you would be better off dead or of hurting yourself in some way?", name: "suicidal", score: null }
     ];
 };
 
@@ -46,7 +46,7 @@ DepressionScore.prototype = {
 
     sum: function() {
         return this.questions.map(function(question) {
-            return question.score;
+            return question.score || 0;
         }).reduce(function(previous_score, current_score, i) {
             return previous_score + current_score;
         });
