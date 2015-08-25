@@ -23,11 +23,11 @@ h1 {
 }
 
 .main-content {
-    display: inline-block;
+    display: block;
     font-family: Helvetica;
     font-size: 14pt;
     font-weight: 300;
-    margin: 0;
+    margin: 0 auto;
     padding: 10px;
     width: 100%;
 }
@@ -35,6 +35,11 @@ h1 {
 fieldset {
     border: 1px #222 solid;
     border-bottom: none;
+    position: relative;
+}
+
+fieldset:last-child {
+    border-bottom: 1px #222 solid;
 }
 
 fieldset ul {
@@ -47,21 +52,64 @@ fieldset ul li {
 }
 
 fieldset ul li p {
-    font-size: 1.25em;
+    font-size: 1.75em;
+    margin-top: 0;
+}
+
+fieldset ul li.framing-question {
+    margin: 0;
+    padding: 0;
+}
+
+fieldset ul li.framing-question p {
+    font-size: 0.35em;
+    font-style: italic;
 }
 
 fieldset ul li label {
+    cursor: pointer;
+    display: block;
+    font-size: 1.25em;
     padding: 10px;
-    display: inline-block;
-    width: 95%;
+    position: relative;
+    top: 8px;
+    width: auto;
 }
 
 form input[type="submit"] {
     border: 1px #222 solid;
     font-size: 1.145em;
     display: inherit;
-    margin: 0 auto;
-    margin-top: 35px;
+    margin: 25px auto;
+}
+
+
+input[type="radio"] {
+    display:none;
+}
+
+input[type="radio"] + label:before {
+    content: "";
+
+    background-color: #AAA;
+    bottom: 1px;
+    display: inline-block;
+    height: 16px;
+    left: 0;
+    margin-right: 10px;
+    position: relative;
+    width: 16px;
+
+    box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+    border-radius: 8px;
+}
+
+input[type=radio]:checked + label:before {
+    content: "\2022";
+    color: #f3f3f3;
+    font-size: 30px;
+    text-align: center;
+    line-height: 18px;
 }
 
 @media only screen and (min-device-width : 661px) {
@@ -76,13 +124,34 @@ form input[type="submit"] {
         width: 100%;
     }
 
-    .main-content, p {
+    .main-content {
         font-size: 2em;
         padding: 10px;
     }
 
     input[type="submit"] {
         padding: 22px 44px;
+    }
+
+    input[type="radio"] {
+        display:none;
+    }
+
+    input[type="radio"] + label:before {
+        content: "";
+        height: 22px;
+        position: relative;
+        width: 22px;
+
+        border-radius: 12px;
+    }
+
+    input[type=radio]:checked + label:before {
+        content: "\2022";
+        color: #f3f3f3;
+        font-size: 30px;
+        text-align: center;
+        line-height: 21px;
     }
 }
 

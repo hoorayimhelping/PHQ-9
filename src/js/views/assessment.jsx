@@ -31,7 +31,7 @@ module.exports = React.createClass({
         return (
             <div>
                 <RankingForm score={this.props.score} assess={this.assess} />
-                <p className={this.state.show_assessment ? '' : 'hide' }>Based on the way you answered, your depression is <span className="final-assessment">{this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))}</span></p>
+                <p className={this.state.show_assessment ? '' : 'hide' }>Based on the way you answered, your depression appears to be <span className="final-assessment">{this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))}</span></p>
                 <TherapistList therapists={this.props.therapists} handleClick={this.contactTherapist} visible={this.state.show_therapists ? true : false } />
             </div>
         );

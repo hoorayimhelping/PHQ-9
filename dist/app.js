@@ -19932,7 +19932,7 @@ module.exports = React.createClass({displayName: "exports",
         return (
             React.createElement("div", null, 
                 React.createElement(RankingForm, {score: this.props.score, assess: this.assess}), 
-                React.createElement("p", {className: this.state.show_assessment ? '' : 'hide'}, "Based on the way you answered, your depression is ", React.createElement("span", {className: "final-assessment"}, this.props.score.pretty(this.props.score.getScore(this.props.score.sum())))), 
+                React.createElement("p", {className: this.state.show_assessment ? '' : 'hide'}, "Based on the way you answered, your depression appears to be ", React.createElement("span", {className: "final-assessment"}, this.props.score.pretty(this.props.score.getScore(this.props.score.sum())))), 
                 React.createElement(TherapistList, {therapists: this.props.therapists, handleClick: this.contactTherapist, visible: this.state.show_therapists ? true : false})
             )
         );
@@ -19954,11 +19954,12 @@ module.exports = React.createClass({displayName: "exports",
         return (
             React.createElement("fieldset", null, 
                 React.createElement("ul", null, 
+                    React.createElement("li", {className: "framing-question"}, React.createElement("p", null, "In the past two weeks have you...")), 
                     React.createElement("li", null, React.createElement("p", null, this.props.question)), 
-                    React.createElement("li", null, React.createElement("input", {name: this.props.name, id: ids[0], type: "radio", onClick: this.props.onClick, value: "0"}), React.createElement("label", {htmlFor: ids[0]}, "Not at all")), 
-                    React.createElement("li", null, React.createElement("input", {name: this.props.name, id: ids[1], type: "radio", onClick: this.props.onClick, value: "1"}), React.createElement("label", {htmlFor: ids[1]}, "Several Days")), 
-                    React.createElement("li", null, React.createElement("input", {name: this.props.name, id: ids[2], type: "radio", onClick: this.props.onClick, value: "2"}), React.createElement("label", {htmlFor: ids[2]}, "More than Half the Days")), 
-                    React.createElement("li", null, React.createElement("input", {name: this.props.name, id: ids[3], type: "radio", onClick: this.props.onClick, value: "3"}), React.createElement("label", {htmlFor: ids[3]}, "Nearly Every Day"))
+                    React.createElement("li", null, React.createElement("input", {name: this.props.name, id: ids[0], type: "radio", onClick: this.props.onClick, value: "0"}), React.createElement("label", {htmlFor: ids[0], style: {backgroundColor: 'hsla(126, 18%, 70%, 1)'}}, "Not at all")), 
+                    React.createElement("li", null, React.createElement("input", {name: this.props.name, id: ids[1], type: "radio", onClick: this.props.onClick, value: "1"}), React.createElement("label", {htmlFor: ids[1], style: {backgroundColor: 'hsla(76, 18%, 70%, 1)'}}, "Several Days")), 
+                    React.createElement("li", null, React.createElement("input", {name: this.props.name, id: ids[2], type: "radio", onClick: this.props.onClick, value: "2"}), React.createElement("label", {htmlFor: ids[2], style: {backgroundColor: 'hsla(41, 18%, 70%, 1)'}}, "More than Half the Days")), 
+                    React.createElement("li", null, React.createElement("input", {name: this.props.name, id: ids[3], type: "radio", onClick: this.props.onClick, value: "3"}), React.createElement("label", {htmlFor: ids[3], style: {backgroundColor: 'hsla(10, 18%, 70%, 1)'}}, "Nearly Every Day"))
                 )
             )
         );
