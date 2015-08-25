@@ -19903,6 +19903,7 @@ var React = require('react');
 
 var RankingForm = require('./ranking_form.jsx');
 var TherapistList = require('./therapist_list.jsx');
+var AssessmentText = require('./assessment_text.jsx');
 
 module.exports = React.createClass({displayName: "exports",
     getInitialState: function() {
@@ -19917,7 +19918,6 @@ module.exports = React.createClass({displayName: "exports",
 
         var score = this.props.score.getScore(this.props.score.sum());
 
-        score = 15;
         this.setState({
             'show_assessment': true,
             'show_therapists': this.props.score.shouldSuggestTherapist(score)
@@ -19929,17 +19929,49 @@ module.exports = React.createClass({displayName: "exports",
     },
 
     render: function()  {
+        if (this.state.show_assessment) {
+            if (this.state.show_therapists) {
+                return (
+                    React.createElement("div", null, 
+                        React.createElement(RankingForm, {score: this.props.score, assess: this.assess}), 
+                        React.createElement(AssessmentText, {text: this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))}), 
+                        React.createElement(TherapistList, {therapists: this.props.therapists, handleClick: this.contactTherapist, visible: this.state.show_therapists ? true : false})
+                    )
+                );
+            }
+
+            return (
+                React.createElement("div", null, 
+                    React.createElement(RankingForm, {score: this.props.score, assess: this.assess}), 
+                    React.createElement(AssessmentText, {text: this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))})
+                )
+            );
+        }
+
         return (
             React.createElement("div", null, 
-                React.createElement(RankingForm, {score: this.props.score, assess: this.assess}), 
-                React.createElement("p", {className: this.state.show_assessment ? '' : 'hide'}, "Based on the way you answered, your depression appears to be ", React.createElement("span", {className: "final-assessment"}, this.props.score.pretty(this.props.score.getScore(this.props.score.sum())))), 
-                React.createElement(TherapistList, {therapists: this.props.therapists, handleClick: this.contactTherapist, visible: this.state.show_therapists ? true : false})
+                React.createElement(RankingForm, {score: this.props.score, assess: this.assess})
             )
+        )
+    }
+});
+
+},{"./assessment_text.jsx":160,"./ranking_form.jsx":162,"./therapist_list.jsx":163,"react":156}],160:[function(require,module,exports){
+var React = require('react');
+
+module.exports = React.createClass({displayName: "exports",
+	componentDidMount: function() {
+        window.scrollTo(0, document.body.scrollHeight);
+    },
+
+    render: function()  {
+        return (
+            React.createElement("p", {className: "assessment"}, "Based on the way you answered, your depression appears to be ", React.createElement("span", {className: "final-assessment"}, this.props.text))
         );
     }
 });
 
-},{"./ranking_form.jsx":161,"./therapist_list.jsx":162,"react":156}],160:[function(require,module,exports){
+},{"react":156}],161:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({displayName: "exports",
@@ -19966,7 +19998,7 @@ module.exports = React.createClass({displayName: "exports",
     }
 });
 
-},{"react":156}],161:[function(require,module,exports){
+},{"react":156}],162:[function(require,module,exports){
 var React = require('react');
 
 var Ranking = require('./ranking.jsx');
@@ -19994,11 +20026,11 @@ module.exports = React.createClass({displayName: "exports",
     }
 });
 
-},{"./ranking.jsx":160,"react":156}],162:[function(require,module,exports){
+},{"./ranking.jsx":161,"react":156}],163:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({displayName: "exports",
-    render: function()  {
+    render: function() {
         var therapists = this.props.therapists.map(function(therapist, i) {
             return (
                 React.createElement("li", {key: i}, 
