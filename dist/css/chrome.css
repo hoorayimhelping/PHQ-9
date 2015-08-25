@@ -81,7 +81,6 @@ form input[type="submit"] {
     font-size: 1.25em;
     display: block;
     margin: 25px auto;
-    padding: 10px;
 
     border-radius: 6px;
 }
@@ -114,13 +113,21 @@ input[type=radio]:checked + label:before {
     line-height: 18px;
 }
 
-.assessment {
+.assessment-container .assessment {
+    font-size: 1.55em;
     text-align: center;
-    height: 400px;
 }
 
-.assessment .final-assessment {
+.assessment-container .assessment .final-assessment {
     font-weight: 500;
+}
+
+.assessment-container .therapists {
+
+}
+
+.assessment-container .therapists p {
+    text-align: center;
 }
 
 @media only screen and (min-device-width : 661px) {
@@ -130,6 +137,10 @@ input[type=radio]:checked + label:before {
 
     fieldset ul li.framing-question p {
         font-size: 0.75em;
+    }
+
+    form input[type="submit"] {
+        padding: 10px;
     }
 }
 
@@ -171,6 +182,10 @@ input[type=radio]:checked + label:before {
 
     fieldset ul li.framing-question p {
         font-size: 0.35em;
+    }
+
+    .assessment {
+        font-size: 1.55em;
     }
 }
 

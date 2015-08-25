@@ -14,9 +14,12 @@ module.exports = React.createClass({
         }, this);
 
         return (
-            <ul className={this.props.visible ? '' : 'hide' }>
-                {therapists}
-            </ul>
+            <div className="therapists">
+                <p>Don&#39;t worry. Here&#39;s a list of therapists we think would be a good match for you.</p>
+                <ul>
+                    {therapists}
+                </ul>
+            </div>
         );
     }
 });

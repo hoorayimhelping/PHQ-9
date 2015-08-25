@@ -19916,7 +19916,7 @@ module.exports = React.createClass({displayName: "exports",
     assess: function(event) {
         event.preventDefault();
 
-        var score = this.props.score.getScore(this.props.score.sum());
+        var score = this.props.score.sum();
 
         this.setState({
             'show_assessment': true,
@@ -19929,27 +19929,29 @@ module.exports = React.createClass({displayName: "exports",
     },
 
     render: function()  {
+        var class_name = 'assessment-container';
         if (this.state.show_assessment) {
             if (this.state.show_therapists) {
                 return (
-                    React.createElement("div", null, 
+                    React.createElement("div", {className: class_name}, 
                         React.createElement(RankingForm, {score: this.props.score, assess: this.assess}), 
                         React.createElement(AssessmentText, {text: this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))}), 
-                        React.createElement(TherapistList, {therapists: this.props.therapists, handleClick: this.contactTherapist, visible: this.state.show_therapists ? true : false})
+                        React.createElement(TherapistList, {therapists: this.props.therapists, handleClick: this.contactTherapist})
                     )
                 );
             }
 
             return (
-                React.createElement("div", null, 
+                React.createElement("div", {className: class_name}, 
                     React.createElement(RankingForm, {score: this.props.score, assess: this.assess}), 
-                    React.createElement(AssessmentText, {text: this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))})
+                    React.createElement(AssessmentText, {text: this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))}), 
+                    React.createElement("div", {style: {height: '200px'}}, " ")
                 )
             );
         }
 
         return (
-            React.createElement("div", null, 
+            React.createElement("div", {className: class_name}, 
                 React.createElement(RankingForm, {score: this.props.score, assess: this.assess})
             )
         )
@@ -19966,7 +19968,7 @@ module.exports = React.createClass({displayName: "exports",
 
     render: function()  {
         return (
-            React.createElement("p", {className: "assessment"}, "Based on the way you answered, your depression appears to be ", React.createElement("span", {className: "final-assessment"}, this.props.text))
+            React.createElement("h3", {className: "assessment"}, "Based on the way you answered, your depression appears to be ", React.createElement("span", {className: "final-assessment"}, this.props.text))
         );
     }
 });
@@ -19988,10 +19990,10 @@ module.exports = React.createClass({displayName: "exports",
                 React.createElement("ul", null, 
                     React.createElement("li", {className: "framing-question"}, React.createElement("p", null, "In the past two weeks have you...")), 
                     React.createElement("li", null, React.createElement("p", null, this.props.question)), 
-                    React.createElement("li", null, React.createElement("input", {defaultChecked: true, name: this.props.name, id: ids[0], type: "radio", onClick: this.props.onClick, value: "0"}), React.createElement("label", {htmlFor: ids[0], style: {backgroundColor: 'hsla(126, 18%, 70%, 1)'}}, "Not at all")), 
-                    React.createElement("li", null, React.createElement("input", {name: this.props.name, id: ids[1], type: "radio", onClick: this.props.onClick, value: "1"}), React.createElement("label", {htmlFor: ids[1], style: {backgroundColor: 'hsla(76, 18%, 70%, 1)'}}, "Several Days")), 
-                    React.createElement("li", null, React.createElement("input", {name: this.props.name, id: ids[2], type: "radio", onClick: this.props.onClick, value: "2"}), React.createElement("label", {htmlFor: ids[2], style: {backgroundColor: 'hsla(41, 18%, 70%, 1)'}}, "More than Half the Days")), 
-                    React.createElement("li", null, React.createElement("input", {name: this.props.name, id: ids[3], type: "radio", onClick: this.props.onClick, value: "3"}), React.createElement("label", {htmlFor: ids[3], style: {backgroundColor: 'hsla(10, 18%, 70%, 1)'}}, "Nearly Every Day"))
+                    React.createElement("li", null, React.createElement("input", {defaultChecked: true, name: this.props.name, id: ids[0], type: "radio", onChange: this.props.onChange, value: "0"}), React.createElement("label", {htmlFor: ids[0], style: {backgroundColor: 'hsla(126, 18%, 70%, 1)'}}, "Not at all")), 
+                    React.createElement("li", null, React.createElement("input", {name: this.props.name, id: ids[1], type: "radio", onChange: this.props.onChange, value: "1"}), React.createElement("label", {htmlFor: ids[1], style: {backgroundColor: 'hsla(76, 18%, 70%, 1)'}}, "Several Days")), 
+                    React.createElement("li", null, React.createElement("input", {name: this.props.name, id: ids[2], type: "radio", onChange: this.props.onChange, value: "2"}), React.createElement("label", {htmlFor: ids[2], style: {backgroundColor: 'hsla(41, 18%, 70%, 1)'}}, "More than Half the Days")), 
+                    React.createElement("li", null, React.createElement("input", {name: this.props.name, id: ids[3], type: "radio", onChange: this.props.onChange, value: "3"}), React.createElement("label", {htmlFor: ids[3], style: {backgroundColor: 'hsla(10, 18%, 70%, 1)'}}, "Nearly Every Day"))
                 )
             )
         );
@@ -20004,14 +20006,14 @@ var React = require('react');
 var Ranking = require('./ranking.jsx');
 
 module.exports = React.createClass({displayName: "exports",
-    handleClick: function(i, event) {
+    handleChange: function(i, event) {
         this.props.score.setAnswer(i, event.target.value);
     },
 
     render: function()  {
         var depression_form = this.props.score.questions.map(function(question, i) {
             return (
-                React.createElement(Ranking, {name: question.name, order: i, question: question.text, framing_question: this.props.framing_question, key: i, onClick: this.handleClick.bind(this, i)})
+                React.createElement(Ranking, {name: question.name, order: i, question: question.text, framing_question: this.props.framing_question, key: i, onChange: this.handleChange.bind(this, i)})
             );
         }, this);
 
@@ -20043,8 +20045,11 @@ module.exports = React.createClass({displayName: "exports",
         }, this);
 
         return (
-            React.createElement("ul", {className: this.props.visible ? '' : 'hide'}, 
-                therapists
+            React.createElement("div", {className: "therapists"}, 
+                React.createElement("p", null, "Don't worry. Here's a list of therapists we think would be a good match for you."), 
+                React.createElement("ul", null, 
+                    therapists
+                )
             )
         );
     }

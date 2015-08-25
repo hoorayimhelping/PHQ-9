@@ -7,7 +7,7 @@ module.exports = React.createClass({
 
     render: function()  {
         return (
-            <p className="assessment">Based on the way you answered, your depression appears to be <span className="final-assessment">{this.props.text}</span></p>
+            <h3 className="assessment">Based on the way you answered, your depression appears to be <span className="final-assessment">{this.props.text}</span></h3>
         );
     }
 });

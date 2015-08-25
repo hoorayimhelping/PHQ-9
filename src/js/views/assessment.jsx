@@ -15,7 +15,7 @@ module.exports = React.createClass({
     assess: function(event) {
         event.preventDefault();
 
-        var score = this.props.score.getScore(this.props.score.sum());
+        var score = this.props.score.sum();
 
         this.setState({
             'show_assessment': true,
@@ -28,27 +28,29 @@ module.exports = React.createClass({
     },
 
     render: function()  {
+        var class_name = 'assessment-container';
         if (this.state.show_assessment) {
             if (this.state.show_therapists) {
                 return (
-                    <div>
+                    <div className={class_name}>
                         <RankingForm score={this.props.score} assess={this.assess} />
                         <AssessmentText text={this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))} />
-                        <TherapistList therapists={this.props.therapists} handleClick={this.contactTherapist} visible={this.state.show_therapists ? true : false } />
+                        <TherapistList therapists={this.props.therapists} handleClick={this.contactTherapist} />
                     </div>
                 );
             }
 
             return (
-                <div>
+                <div className={class_name}>
                     <RankingForm score={this.props.score} assess={this.assess} />
                     <AssessmentText text={this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))} />
+                    <div style={{height: '200px'}}>&nbsp;</div>
                 </div>
             );
         }
 
         return (
-            <div>
+            <div className={class_name}>
                 <RankingForm score={this.props.score} assess={this.assess} />
             </div>
         )
