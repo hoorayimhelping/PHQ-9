@@ -8,10 +8,10 @@ Stories:
 ### Installation:
 
 ```
-git clone git@github.com:hoorayimhelping/PHQ-9.git
-cd PHQ-9
-npm install
-gulp
+git clone git@github.com:hoorayimhelping/PHQ-9.git && \
+cd PHQ-9 && \
+npm install && \
+gulp \
 open index.html
 ```
 #### Run default task (lint, test, build)
