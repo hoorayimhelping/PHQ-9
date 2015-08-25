@@ -19827,15 +19827,15 @@ var DepressionScore = function() {
     };
 
     this.questions = [
-        { text: "Little interest or pleasure in doing things", name: "no_interest", score: 0 },
-        { text: "Feeling down, depressed, or hopeless?", name: "feeling_down", score: 0 },
-        { text: "Trouble falling or staying asleep, or sleeping too much?", name: "sleep", score: 0 },
-        { text: "Feeling tired or having little energy?", name: "no_energy", score: 0 },
-        { text: "Poor appetite or overeating?", name: "appetite", score: 0 },
-        { text: "Feeling bad about yourself - or that you are a failure or have let yourself or your family down?", name: "self_esteem", score: 0 },
-        { text: "Trouble concentrating on things, such as reading the newspaper or watching television?", name: "concentration", score: 0 },
-        { text: "Moving or speaking so slowly that other people could have noticed? Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual?", name: "restless", score: 0 },
-        { text: "Thoughts that you would be better off dead, or of hurting yourself in some way?", name: "suicidal", score: 0 }
+        { text: "Had little interest or pleasure in doing things?", name: "no_interest", score: 0 },
+        { text: "Felt down, depressed, or hopeless?", name: "feeling_down", score: 0 },
+        { text: "Had rouble falling or staying asleep, or sleeping too much?", name: "sleep", score: 0 },
+        { text: "Felt tired or had little energy?", name: "no_energy", score: 0 },
+        { text: "Experienced a poor appetite or overeating?", name: "appetite", score: 0 },
+        { text: "Felt bad about yourself - or that you are a failure or have let yourself or your family down?", name: "self_esteem", score: 0 },
+        { text: "Had trouble concentrating on things, such as reading the newspaper or watching television?", name: "concentration", score: 0 },
+        { text: "Been Moving or speaking so slowly that other people could have noticed? Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual?", name: "restless", score: 0 },
+        { text: "Had thoughts that you would be better off dead, or of hurting yourself in some way?", name: "suicidal", score: 0 }
     ];
 };
 
@@ -19979,7 +19979,7 @@ module.exports = React.createClass({displayName: "exports",
     render: function()  {
         var depression_form = this.props.score.questions.map(function(question, i) {
             return (
-                React.createElement(Ranking, {name: question.name, order: i, question: question.text, key: i, onClick: this.handleClick.bind(this, i)})
+                React.createElement(Ranking, {name: question.name, order: i, question: question.text, framing_question: this.props.framing_question, key: i, onClick: this.handleClick.bind(this, i)})
             );
         }, this);
 

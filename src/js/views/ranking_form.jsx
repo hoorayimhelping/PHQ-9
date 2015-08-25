@@ -10,7 +10,7 @@ module.exports = React.createClass({
     render: function()  {
         var depression_form = this.props.score.questions.map(function(question, i) {
             return (
-                <Ranking name={question.name} order={i} question={question.text} key={i} onClick={this.handleClick.bind(this, i)} />
+                <Ranking name={question.name} order={i} question={question.text} framing_question={this.props.framing_question} key={i} onClick={this.handleClick.bind(this, i)} />
             );
         }, this);
 
