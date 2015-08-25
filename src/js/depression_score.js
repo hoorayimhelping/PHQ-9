@@ -56,10 +56,6 @@ DepressionScore.prototype = {
         return score >= this.range.moderate[0];
     },
 
-    shouldShowAssessment: function(score) {
-        return true;
-    },
-
     pretty: function(range) {
         return this.pretty_range[range];
     }

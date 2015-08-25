@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+*.hide {
+    display: none;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -53,7 +57,6 @@ fieldset ul li label {
 }
 
 form input[type="submit"] {
-    background: darkseagreen;
     border: 1px #222 solid;
     font-size: 1.145em;
     display: inherit;

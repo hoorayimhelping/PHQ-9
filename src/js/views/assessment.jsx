@@ -16,11 +16,11 @@ module.exports = React.createClass({
 
         var score = this.props.score.getScore(this.props.score.sum());
 
+        score = 15;
         this.setState({
-            'show_assessment': this.props.score.shouldShowAssessment(score),
+            'show_assessment': true,
             'show_therapists': this.props.score.shouldSuggestTherapist(score)
         });
-
     },
 
     contactTherapist: function(event, i) {
@@ -28,47 +28,12 @@ module.exports = React.createClass({
     },
 
     render: function()  {
-        var form = (
+        return (
             <div>
                 <RankingForm score={this.props.score} assess={this.assess} />
+                <p className={this.state.show_assessment ? '' : 'hide' }>Based on the way you answered, your depression is <span className="final-assessment">{this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))}</span></p>
+                <TherapistList therapists={this.props.therapists} handleClick={this.contactTherapist} visible={this.state.show_therapists ? true : false } />
             </div>
         );
-
-        var score_assessment = (
-            <p>Based on the way you answered, your depression is <span className="final-assessment">{this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))}</span></p>
-        );
-
-        var therapists = (
-            <TherapistList therapists={this.props.therapists} handleClick={this.contactTherapist} />
-        );
-
-        var final_assessment = score_assessment;
-
-        if (this.state.show_therapists) {
-            final_assessment = (
-                <div>
-                    {score_assessment}
-                    {therapists}
-                </div>
-            );
-        }
-
-        var final_form;
-        if (this.state.show_assessment) {
-            final_form = (
-                <div>
-                    {form}
-                    {final_assessment}
-                </div>
-            );
-        } else {
-            final_form = (
-                <div>
-                    {form}
-                </div>
-            );
-        }
-
-        return final_form;
     }
 });

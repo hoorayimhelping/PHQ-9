@@ -19867,10 +19867,6 @@ DepressionScore.prototype = {
         return score >= this.range.moderate[0];
     },
 
-    shouldShowAssessment: function(score) {
-        return true;
-    },
-
     pretty: function(range) {
         return this.pretty_range[range];
     }
@@ -19921,11 +19917,11 @@ module.exports = React.createClass({displayName: "exports",
 
         var score = this.props.score.getScore(this.props.score.sum());
 
+        score = 15;
         this.setState({
-            'show_assessment': this.props.score.shouldShowAssessment(score),
+            'show_assessment': true,
             'show_therapists': this.props.score.shouldSuggestTherapist(score)
         });
-
     },
 
     contactTherapist: function(event, i) {
@@ -19933,48 +19929,13 @@ module.exports = React.createClass({displayName: "exports",
     },
 
     render: function()  {
-        var form = (
+        return (
             React.createElement("div", null, 
-                React.createElement(RankingForm, {score: this.props.score, assess: this.assess})
+                React.createElement(RankingForm, {score: this.props.score, assess: this.assess}), 
+                React.createElement("p", {className: this.state.show_assessment ? '' : 'hide'}, "Based on the way you answered, your depression is ", React.createElement("span", {className: "final-assessment"}, this.props.score.pretty(this.props.score.getScore(this.props.score.sum())))), 
+                React.createElement(TherapistList, {therapists: this.props.therapists, handleClick: this.contactTherapist, visible: this.state.show_therapists ? true : false})
             )
         );
-
-        var score_assessment = (
-            React.createElement("p", null, "Based on the way you answered, your depression is ", React.createElement("span", {className: "final-assessment"}, this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))))
-        );
-
-        var therapists = (
-            React.createElement(TherapistList, {therapists: this.props.therapists, handleClick: this.contactTherapist})
-        );
-
-        var final_assessment = score_assessment;
-
-        if (this.state.show_therapists) {
-            final_assessment = (
-                React.createElement("div", null, 
-                    score_assessment, 
-                    therapists
-                )
-            );
-        }
-
-        var final_form;
-        if (this.state.show_assessment) {
-            final_form = (
-                React.createElement("div", null, 
-                    form, 
-                    final_assessment
-                )
-            );
-        } else {
-            final_form = (
-                React.createElement("div", null, 
-                    form
-                )
-            );
-        }
-
-        return final_form;
     }
 });
 
@@ -20049,7 +20010,7 @@ module.exports = React.createClass({displayName: "exports",
         }, this);
 
         return (
-            React.createElement("ul", null, 
+            React.createElement("ul", {className: this.props.visible ? '' : 'hide'}, 
                 therapists
             )
         );
