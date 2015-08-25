@@ -19881,13 +19881,28 @@ var Assessment = require('./views/assessment.jsx');
 
 var DepressionScore = require('./depression_score');
 var score = new DepressionScore();
+var therapists = [
+    {
+        name: 'Carol Spivack',
+        specialties: 'Depression, Anxiety, Substance Abuse',
+    },
+    {
+        name: 'Graham Chopin',
+        specialties: 'Anxiety, ADHD, Family Issues',
+    },
+    {
+        name: 'Boris Pittman',
+        specialties: 'Depression, Anxiety, Eating Disorders'
+    }
+];
 
-React.render(React.createElement(Assessment, {score: score}), document.getElementById('container'));
+React.render(React.createElement(Assessment, {score: score, therapists: therapists}), document.getElementById('container'));
 
 },{"./depression_score":157,"./views/assessment.jsx":159,"react":156}],159:[function(require,module,exports){
 var React = require('react');
 
 var RankingForm = require('./ranking_form.jsx');
+var TherapistList = require('./therapist_list.jsx');
 
 module.exports = React.createClass({displayName: "exports",
     getInitialState: function() {
@@ -19896,30 +19911,53 @@ module.exports = React.createClass({displayName: "exports",
 
     assess: function(event) {
         event.preventDefault();
+
         var score = this.props.score.getScore(this.props.score.sum());
+
         this.setState({
             'show_assessment': this.props.score.shouldSuggestTherapist(score)
         });
+
+    },
+
+    contactTherapist: function(event, i) {
+        console.log('contact therapist', arguments);
     },
 
     render: function()  {
-        if (this.state.show_assessment) {
-            return (
-                React.createElement("div", null, 
-                    React.createElement("h1", null, "Sorry bro, you\"re depressed")
-                )
+        var form = (
+            React.createElement("div", null, 
+                React.createElement(RankingForm, {score: this.props.score, assess: this.assess})
             )
-        } else {
-            return (
+        );
+
+        var therapists = (
+            React.createElement("div", null, 
+                React.createElement(TherapistList, {therapists: this.props.therapists, handleClick: this.contactTherapist})
+            )
+        );
+
+        var final_form;
+        if (this.state.show_assessment) {
+            final_form = (
                 React.createElement("div", null, 
-                    React.createElement(RankingForm, {score: this.props.score, assess: this.assess})
+                    form, 
+                    therapists
+                )
+            );
+        } else {
+            final_form = (
+                React.createElement("div", null, 
+                    form
                 )
             );
         }
+
+        return final_form;
     }
 });
 
-},{"./ranking_form.jsx":161,"react":156}],160:[function(require,module,exports){
+},{"./ranking_form.jsx":161,"./therapist_list.jsx":162,"react":156}],160:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({displayName: "exports",
@@ -19973,4 +20011,28 @@ module.exports = React.createClass({displayName: "exports",
     }
 });
 
-},{"./ranking.jsx":160,"react":156}]},{},[158]);
+},{"./ranking.jsx":160,"react":156}],162:[function(require,module,exports){
+var React = require('react');
+
+module.exports = React.createClass({displayName: "exports",
+    render: function()  {
+        var therapists = this.props.therapists.map(function(therapist, i) {
+            return (
+                React.createElement("li", {key: i}, 
+                    React.createElement("h3", null, therapist.name), 
+                    React.createElement("h4", null, therapist.specialties), 
+
+                    React.createElement("a", {onClick: this.props.handleClick}, "Send an introductory email on my behalf")
+                )
+            );
+        }, this);
+
+        return (
+            React.createElement("ul", null, 
+                therapists
+            )
+        );
+    }
+});
+
+},{"react":156}]},{},[158]);

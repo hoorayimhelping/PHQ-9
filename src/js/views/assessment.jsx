@@ -1,6 +1,7 @@
 var React = require('react');
 
 var RankingForm = require('./ranking_form.jsx');
+var TherapistList = require('./therapist_list.jsx');
 
 module.exports = React.createClass({
     getInitialState: function() {
@@ -9,25 +10,48 @@ module.exports = React.createClass({
 
     assess: function(event) {
         event.preventDefault();
+
         var score = this.props.score.getScore(this.props.score.sum());
+
         this.setState({
             'show_assessment': this.props.score.shouldSuggestTherapist(score)
         });
+
+    },
+
+    contactTherapist: function(event, i) {
+        console.log('contact therapist', arguments);
     },
 
     render: function()  {
+        var form = (
+            <div>
+                <RankingForm score={this.props.score} assess={this.assess} />
+            </div>
+        );
+
+        var therapists = (
+            <div>
+                <TherapistList therapists={this.props.therapists} handleClick={this.contactTherapist} />
+            </div>
+        );
+
+        var final_form;
         if (this.state.show_assessment) {
-            return (
+            final_form = (
                 <div>
-                    <h1>Sorry bro, you&quot;re depressed</h1>
+                    {form}
+                    {therapists}
                 </div>
-            )
+            );
         } else {
-            return (
+            final_form = (
                 <div>
-                    <RankingForm score={this.props.score} assess={this.assess} />
+                    {form}
                 </div>
             );
         }
+
+        return final_form;
     }
 });
