@@ -122,11 +122,40 @@ input[type=radio]:checked + label:before {
     font-weight: 500;
 }
 
-.assessment-container .therapists {
-
+.assessment-container .therapists h3,
+.assessment-container .therapists h4 {
+    display: inline-block;
+    margin: 10px 0;
+    padding: 5px;
 }
 
 .assessment-container .therapists p {
+    text-align: center;
+}
+
+.assessment-container .therapists ul li {
+    border: 1px #222 solid;
+    border-radius: 10px;
+    list-style: none;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+.assessment-container .therapists ul li h3 {
+    font-size: 1.45em;
+    margin-right: 10px;
+}
+
+.assessment-container .therapists ul li h4 {
+    font-size: 0.85em;
+    font-style: italic;
+}
+
+.assessment-container .therapists ul li a {
+    background: hsla(126, 55%, 70%, 1);
+    border-radius: 10px;
+    display: inline-block;
+    margin: 15px auto;
     text-align: center;
 }
 
@@ -141,6 +170,12 @@ input[type=radio]:checked + label:before {
 
     form input[type="submit"] {
         padding: 10px;
+    }
+
+    .assessment-container .therapists ul li a {
+        display: block;
+        padding: 22px;
+        width: 75%;
     }
 }
 
@@ -184,8 +219,19 @@ input[type=radio]:checked + label:before {
         font-size: 0.35em;
     }
 
-    .assessment {
+    .assessment-container .assessment {
         font-size: 1.55em;
+    }
+
+    .assessment-container .therapists ul li {
+        font-size: 1.55em;
+    }
+
+    .assessment-container .therapists ul li a {
+        font-size: 0.90em;
+        margin: 15px 0;
+        padding: 36px;
+        text-align: center;
     }
 }
 
