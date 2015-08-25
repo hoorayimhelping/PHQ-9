@@ -8,7 +8,7 @@ module.exports = React.createClass({
                     <h3>{therapist.name}</h3>
                     <h4>{therapist.specialties}</h4>
 
-                    <a onClick={this.props.handleClick}>Send an introductory email on my behalf</a>
+                    <a onClick={this.props.handleClick} data-name={therapist.name}>Send an introductory email on my behalf</a>
                 </li>
             );
         }, this);

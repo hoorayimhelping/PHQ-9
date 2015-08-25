@@ -78,6 +78,7 @@ fieldset ul li label {
 form input[type="submit"] {
     background-color: hsla(126, 18%, 70%, 1);
     border: 1px solid #AAA;
+    cursor: pointer;
     font-size: 1.25em;
     display: block;
     margin: 25px auto;
@@ -159,6 +160,14 @@ input[type=radio]:checked + label:before {
     text-align: center;
 }
 
+.thank-you {
+    text-align: center;
+}
+
+.thank-you h2 {
+    font-size: 1.95em
+}
+
 @media only screen and (min-device-width : 661px) {
     .main-content, p {
         max-width: 641px;
@@ -173,6 +182,7 @@ input[type=radio]:checked + label:before {
     }
 
     .assessment-container .therapists ul li a {
+        cursor: pointer;
         display: block;
         padding: 22px;
         width: 75%;
@@ -232,6 +242,14 @@ input[type=radio]:checked + label:before {
         margin: 15px 0;
         padding: 36px;
         text-align: center;
+    }
+
+    .thank-you h2 {
+        font-size: 2.05em
+    }
+
+    .thank-you p {
+        font-size: 1.95em
     }
 }
 

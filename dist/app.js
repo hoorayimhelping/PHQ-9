@@ -19909,7 +19909,9 @@ module.exports = React.createClass({displayName: "exports",
     getInitialState: function() {
         return {
             show_assessment: false,
-            show_therapists: false
+            show_therapists: false,
+            show_thank_you: false,
+            thank_you_therapist: ''
         };
     },
 
@@ -19921,15 +19923,32 @@ module.exports = React.createClass({displayName: "exports",
         this.setState({
             'show_assessment': true,
             'show_therapists': this.props.score.shouldSuggestTherapist(score)
+        }, function() {
+            window.scrollTo(0, document.body.scrollHeight);
         });
     },
 
-    contactTherapist: function(event, i) {
-        console.log('contact therapist', arguments);
+    contactTherapist: function(event) {
+        event.preventDefault();
+
+        this.setState({
+            'show_thank_you': true,
+            'thank_you_therapist': event.target.dataset.name
+        });
     },
 
     render: function()  {
         var class_name = 'assessment-container';
+
+        if (this.state.show_thank_you) {
+            return (
+                React.createElement("div", {className: "thank-you"}, 
+                    React.createElement("h2", null, "Great!"), 
+                    React.createElement("p", null, "We've sent out an email to ", this.state.thank_you_therapist, ". Expect to hear back within the next 48 hours.")
+                )
+            )
+        }
+
         if (this.state.show_assessment) {
             if (this.state.show_therapists) {
                 return (
@@ -19962,13 +19981,9 @@ module.exports = React.createClass({displayName: "exports",
 var React = require('react');
 
 module.exports = React.createClass({displayName: "exports",
-	componentDidMount: function() {
-        window.scrollTo(0, document.body.scrollHeight);
-    },
-
     render: function()  {
         return (
-            React.createElement("h3", {className: "assessment"}, "Based on the way you answered, your depression appears to be ", React.createElement("span", {className: "final-assessment"}, this.props.text))
+            React.createElement("h3", {className: "assessment"}, "Based on the way you answered, your depression appears to be ", React.createElement("span", {className: "final-assessment"}, this.props.text, "."))
         );
     }
 });
@@ -20039,7 +20054,7 @@ module.exports = React.createClass({displayName: "exports",
                     React.createElement("h3", null, therapist.name), 
                     React.createElement("h4", null, therapist.specialties), 
 
-                    React.createElement("a", {onClick: this.props.handleClick}, "Send an introductory email on my behalf")
+                    React.createElement("a", {onClick: this.props.handleClick, "data-name": therapist.name}, "Send an introductory email on my behalf")
                 )
             );
         }, this);
