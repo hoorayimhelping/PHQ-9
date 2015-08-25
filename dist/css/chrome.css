@@ -62,7 +62,6 @@ fieldset ul li.framing-question {
 }
 
 fieldset ul li.framing-question p {
-    font-size: 0.35em;
     font-style: italic;
 }
 
@@ -77,12 +76,15 @@ fieldset ul li label {
 }
 
 form input[type="submit"] {
-    border: 1px #222 solid;
-    font-size: 1.145em;
-    display: inherit;
+    background-color: hsla(126, 18%, 70%, 1);
+    border: 1px solid #AAA;
+    font-size: 1.25em;
+    display: block;
     margin: 25px auto;
-}
+    padding: 10px;
 
+    border-radius: 6px;
+}
 
 input[type="radio"] {
     display:none;
@@ -115,6 +117,10 @@ input[type=radio]:checked + label:before {
 @media only screen and (min-device-width : 661px) {
     .main-content, p {
         max-width: 641px;
+    }
+
+    fieldset ul li.framing-question p {
+        font-size: 0.75em;
     }
 }
 
@@ -152,6 +158,10 @@ input[type=radio]:checked + label:before {
         font-size: 30px;
         text-align: center;
         line-height: 21px;
+    }
+
+    fieldset ul li.framing-question p {
+        font-size: 0.35em;
     }
 }
 
