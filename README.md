@@ -33,4 +33,4 @@ open index.html
 ### Context on development
 To keep things simple, I worked under the assumption that the user has a fairly modern browser, either on their phone or desktop. This allowed me to focus on the design of the system (from a software point of view) rather than boxing with the browser.
 
-My approach from a product/usability standpoint was this:
+Based on my own experience with the PHQ-9, I designed the interactions under some specific assumptions: Depression clouds our cognition, problem solving, judgement, self esteem, and reasoning abilities, so the questions should be simple to understand and answer. A lot of the PHQ-9 tests I've taken had awkwardly worded questions and answers which made me unsure how I was responding.
