@@ -19809,6 +19809,19 @@ module.exports = warning;
 module.exports = require('./lib/React');
 
 },{"./lib/React":29}],157:[function(require,module,exports){
+var React = require('react');
+
+var Assessment = require('./views/assessment.jsx');
+
+var DepressionScore = require('./model/depression_score');
+var score = new DepressionScore();
+
+var Therapists = require('./model/therapists')
+var therapists = new Therapists();
+
+React.render(React.createElement(Assessment, {score: score, therapists: therapists}), document.getElementById('container'));
+
+},{"./model/depression_score":158,"./model/therapists":159,"./views/assessment.jsx":160,"react":156}],158:[function(require,module,exports){
 var DepressionScore = function() {
     this.range = {
         'minimal': [0, 4],
@@ -19874,20 +19887,7 @@ DepressionScore.prototype = {
 
 module.exports = DepressionScore;
 
-},{}],158:[function(require,module,exports){
-var React = require('react');
-
-var Assessment = require('./views/assessment.jsx');
-
-var DepressionScore = require('./depression_score');
-var score = new DepressionScore();
-
-var Therapists = require('./therapists')
-var therapists = new Therapists();
-
-React.render(React.createElement(Assessment, {score: score, therapists: therapists}), document.getElementById('container'));
-
-},{"./depression_score":157,"./therapists":159,"./views/assessment.jsx":160,"react":156}],159:[function(require,module,exports){
+},{}],159:[function(require,module,exports){
 var Therapists = function() {
     this.selected_therapist = 1;
 
@@ -19948,7 +19948,6 @@ module.exports = React.createClass({displayName: "exports",
             'show_assessment': true,
             'show_therapists': this.props.score.shouldSuggestTherapist(score)
         }, function() {
-            window.scrollTo(0, document.body.scrollHeight);
             React.findDOMNode(this.refs.assessment_text).scrollIntoView();
         });
     },
@@ -19966,6 +19965,7 @@ module.exports = React.createClass({displayName: "exports",
     render: function()  {
         var class_name = 'assessment-container';
 
+        // patient has chosen a therapist to contact
         if (this.state.show_thank_you) {
             return (
                 React.createElement("div", {className: "thank-you"}, 
@@ -19975,7 +19975,9 @@ module.exports = React.createClass({displayName: "exports",
             )
         }
 
+        // patient has submitted the form and wants an asssement
         if (this.state.show_assessment) {
+            // patient has moderate depression or worse
             if (this.state.show_therapists) {
                 return (
                     React.createElement("div", {className: class_name}, 
@@ -19986,6 +19988,7 @@ module.exports = React.createClass({displayName: "exports",
                 );
             }
 
+            // patient has submitted the form and has mild or minimal depression
             return (
                 React.createElement("div", {className: class_name}, 
                     React.createElement(RankingForm, {score: this.props.score, assess: this.assess}), 
@@ -19995,6 +19998,7 @@ module.exports = React.createClass({displayName: "exports",
             );
         }
 
+        // initial state
         return (
             React.createElement("div", {className: class_name}, 
                 React.createElement(RankingForm, {score: this.props.score, assess: this.assess})
@@ -20100,4 +20104,4 @@ module.exports = React.createClass({displayName: "exports",
     }
 });
 
-},{"react":156}]},{},[158]);
+},{"react":156}]},{},[157]);
