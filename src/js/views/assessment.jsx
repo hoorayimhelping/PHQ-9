@@ -10,7 +10,6 @@ module.exports = React.createClass({
             show_assessment: false,
             show_therapists: false,
             show_thank_you: false,
-            thank_you_therapist: ''
         };
     },
 
@@ -24,15 +23,17 @@ module.exports = React.createClass({
             'show_therapists': this.props.score.shouldSuggestTherapist(score)
         }, function() {
             window.scrollTo(0, document.body.scrollHeight);
+            React.findDOMNode(this.refs.assessment_text).scrollIntoView();
         });
     },
 
-    contactTherapist: function(event) {
+    contactTherapist: function(i) {
         event.preventDefault();
 
+        this.props.therapists.setSelectedTherapist(i);
+
         this.setState({
-            'show_thank_you': true,
-            'thank_you_therapist': event.target.dataset.name
+            'show_thank_you': true
         });
     },
 
@@ -43,7 +44,7 @@ module.exports = React.createClass({
             return (
                 <div className="thank-you">
                     <h2>Great!</h2>
-                    <p>We&#39;ve sent out an email to {this.state.thank_you_therapist}. Expect to hear back within the next 48 hours.</p>
+                    <p>We&#39;ve sent out an email to {this.props.therapists.getSelectedTherapist().name}. Expect to hear back within the next 48 hours.</p>
                 </div>
             )
         }
@@ -53,8 +54,8 @@ module.exports = React.createClass({
                 return (
                     <div className={class_name}>
                         <RankingForm score={this.props.score} assess={this.assess} />
-                        <AssessmentText text={this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))} />
-                        <TherapistList therapists={this.props.therapists} handleClick={this.contactTherapist} />
+                        <AssessmentText ref="assessment_text" text={this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))} />
+                        <TherapistList therapists={this.props.therapists.getTherapists()} handleClick={this.contactTherapist} />
                     </div>
                 );
             }
@@ -62,7 +63,7 @@ module.exports = React.createClass({
             return (
                 <div className={class_name}>
                     <RankingForm score={this.props.score} assess={this.assess} />
-                    <AssessmentText text={this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))} />
+                    <AssessmentText ref="assessment_text" text={this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))} />
                     <div style={{height: '200px'}}>&nbsp;</div>
                 </div>
             );

@@ -1,6 +1,10 @@
 var React = require('react');
 
 module.exports = React.createClass({
+    handleClick: function(event) {
+        this.props.handleClick(event.target.dataset.index)
+    },
+
     render: function() {
         var therapists = this.props.therapists.map(function(therapist, i) {
             return (
@@ -8,7 +12,7 @@ module.exports = React.createClass({
                     <h3>{therapist.name}</h3>
                     <h4>{therapist.specialties}</h4>
 
-                    <a onClick={this.props.handleClick} data-name={therapist.name}>Send an introductory email on my behalf</a>
+                    <a onClick={this.handleClick} data-index={i}>Send an introductory email on my behalf</a>
                 </li>
             );
         }, this);

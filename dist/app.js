@@ -19881,24 +19881,49 @@ var Assessment = require('./views/assessment.jsx');
 
 var DepressionScore = require('./depression_score');
 var score = new DepressionScore();
-var therapists = [
-    {
-        name: 'Carol Spivack',
-        specialties: 'Depression, Anxiety, Substance Abuse',
-    },
-    {
-        name: 'Graham Chopin',
-        specialties: 'Anxiety, ADHD, Family Issues',
-    },
-    {
-        name: 'Boris Pittman',
-        specialties: 'Depression, Anxiety, Eating Disorders'
-    }
-];
+
+var Therapists = require('./therapists')
+var therapists = new Therapists();
 
 React.render(React.createElement(Assessment, {score: score, therapists: therapists}), document.getElementById('container'));
 
-},{"./depression_score":157,"./views/assessment.jsx":159,"react":156}],159:[function(require,module,exports){
+},{"./depression_score":157,"./therapists":159,"./views/assessment.jsx":160,"react":156}],159:[function(require,module,exports){
+var Therapists = function() {
+    this.selected_therapist = 1;
+
+    this.therapists = [
+        {
+            name: 'Carol Spivack',
+            specialties: 'Depression, Anxiety, Substance Abuse',
+        },
+        {
+            name: 'Graham Chopin',
+            specialties: 'Anxiety, ADHD, Family Issues',
+        },
+        {
+            name: 'Boris Pittman',
+            specialties: 'Depression, Anxiety, Eating Disorders'
+        }
+    ];
+};
+
+Therapists.prototype = {
+    getTherapists: function() {
+        return this.therapists;
+    },
+
+    getSelectedTherapist: function() {
+        return this.therapists[this.selected_therapist];
+    },
+
+    setSelectedTherapist: function(index) {
+        this.selected_therapist = index;
+    }
+};
+
+module.exports = Therapists;
+
+},{}],160:[function(require,module,exports){
 var React = require('react');
 
 var RankingForm = require('./ranking_form.jsx');
@@ -19911,7 +19936,6 @@ module.exports = React.createClass({displayName: "exports",
             show_assessment: false,
             show_therapists: false,
             show_thank_you: false,
-            thank_you_therapist: ''
         };
     },
 
@@ -19925,15 +19949,17 @@ module.exports = React.createClass({displayName: "exports",
             'show_therapists': this.props.score.shouldSuggestTherapist(score)
         }, function() {
             window.scrollTo(0, document.body.scrollHeight);
+            React.findDOMNode(this.refs.assessment_text).scrollIntoView();
         });
     },
 
-    contactTherapist: function(event) {
+    contactTherapist: function(i) {
         event.preventDefault();
 
+        this.props.therapists.setSelectedTherapist(i);
+
         this.setState({
-            'show_thank_you': true,
-            'thank_you_therapist': event.target.dataset.name
+            'show_thank_you': true
         });
     },
 
@@ -19944,7 +19970,7 @@ module.exports = React.createClass({displayName: "exports",
             return (
                 React.createElement("div", {className: "thank-you"}, 
                     React.createElement("h2", null, "Great!"), 
-                    React.createElement("p", null, "We've sent out an email to ", this.state.thank_you_therapist, ". Expect to hear back within the next 48 hours.")
+                    React.createElement("p", null, "We've sent out an email to ", this.props.therapists.getSelectedTherapist().name, ". Expect to hear back within the next 48 hours.")
                 )
             )
         }
@@ -19954,8 +19980,8 @@ module.exports = React.createClass({displayName: "exports",
                 return (
                     React.createElement("div", {className: class_name}, 
                         React.createElement(RankingForm, {score: this.props.score, assess: this.assess}), 
-                        React.createElement(AssessmentText, {text: this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))}), 
-                        React.createElement(TherapistList, {therapists: this.props.therapists, handleClick: this.contactTherapist})
+                        React.createElement(AssessmentText, {ref: "assessment_text", text: this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))}), 
+                        React.createElement(TherapistList, {therapists: this.props.therapists.getTherapists(), handleClick: this.contactTherapist})
                     )
                 );
             }
@@ -19963,7 +19989,7 @@ module.exports = React.createClass({displayName: "exports",
             return (
                 React.createElement("div", {className: class_name}, 
                     React.createElement(RankingForm, {score: this.props.score, assess: this.assess}), 
-                    React.createElement(AssessmentText, {text: this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))}), 
+                    React.createElement(AssessmentText, {ref: "assessment_text", text: this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))}), 
                     React.createElement("div", {style: {height: '200px'}}, " ")
                 )
             );
@@ -19977,7 +20003,7 @@ module.exports = React.createClass({displayName: "exports",
     }
 });
 
-},{"./assessment_text.jsx":160,"./ranking_form.jsx":162,"./therapist_list.jsx":163,"react":156}],160:[function(require,module,exports){
+},{"./assessment_text.jsx":161,"./ranking_form.jsx":163,"./therapist_list.jsx":164,"react":156}],161:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({displayName: "exports",
@@ -19988,7 +20014,7 @@ module.exports = React.createClass({displayName: "exports",
     }
 });
 
-},{"react":156}],161:[function(require,module,exports){
+},{"react":156}],162:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({displayName: "exports",
@@ -20015,7 +20041,7 @@ module.exports = React.createClass({displayName: "exports",
     }
 });
 
-},{"react":156}],162:[function(require,module,exports){
+},{"react":156}],163:[function(require,module,exports){
 var React = require('react');
 
 var Ranking = require('./ranking.jsx');
@@ -20043,10 +20069,14 @@ module.exports = React.createClass({displayName: "exports",
     }
 });
 
-},{"./ranking.jsx":161,"react":156}],163:[function(require,module,exports){
+},{"./ranking.jsx":162,"react":156}],164:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({displayName: "exports",
+    handleClick: function(event) {
+        this.props.handleClick(event.target.dataset.index)
+    },
+
     render: function() {
         var therapists = this.props.therapists.map(function(therapist, i) {
             return (
@@ -20054,7 +20084,7 @@ module.exports = React.createClass({displayName: "exports",
                     React.createElement("h3", null, therapist.name), 
                     React.createElement("h4", null, therapist.specialties), 
 
-                    React.createElement("a", {onClick: this.props.handleClick, "data-name": therapist.name}, "Send an introductory email on my behalf")
+                    React.createElement("a", {onClick: this.handleClick, "data-index": i}, "Send an introductory email on my behalf")
                 )
             );
         }, this);
