@@ -1,4 +1,4 @@
-Implement a mobile-friendly [PHQ-9](https://en.wikipedia.org/wiki/Patient_Health_Questionnaire) questionnaire front-end in React.
+##Implementation of a mobile-friendly [PHQ-9](https://en.wikipedia.org/wiki/Patient_Health_Questionnaire) questionnaire front-end in React
 
 ###Stories:
 1) As a patient I want to take the PHQ-9 depression screener through my phone (mobile-friendly site) and get the assessment score and what that means.
@@ -27,3 +27,10 @@ open index.html
 
 #### Build jsx and browserify require modules
 `gulp build`
+
+*I am not a designer!*
+
+### Context on development
+To keep things simple, I worked under the assumption that the user has a fairly modern browser, either on their phone or desktop. This allowed me to focus on the design of the system (from a software point of view) rather than boxing with the browser.
+
+My approach from a product/usability standpoint was this:
