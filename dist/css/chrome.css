@@ -42,6 +42,17 @@ fieldset:last-child {
     border-bottom: 1px #222 solid;
 }
 
+fieldset.needs-validation {
+    border-color: red;
+    border-width: 3px;
+}
+
+fieldset.needs-validation p.validation-message {
+    color: red;
+    margin: 0 auto;
+    text-align: center;
+}
+
 fieldset ul {
     padding: 0 25px;
 }
@@ -189,6 +200,11 @@ input[type=radio]:checked + label:before {
         padding: 22px;
         width: 75%;
     }
+
+    fieldset.needs-validation p.validation-message {
+        font-size: .95em;
+        width: 85%;
+    }
 }
 
 @media only screen and (max-device-width : 660px) {
@@ -258,6 +274,11 @@ input[type=radio]:checked + label:before {
 
     .thank-you p {
         font-size: 1.95em
+    }
+
+    fieldset.needs-validation p.validation-message {
+        font-size: 1.55em;
+        width: 95%;
     }
 }
 

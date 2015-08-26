@@ -3,14 +3,52 @@ var React = require('react');
 var Ranking = require('./ranking.jsx');
 
 module.exports = React.createClass({
+    getInitialState: function() {
+        return {
+            needs_validation: {}
+        };
+    },
+
+    validate: function(event) {
+        event.preventDefault();
+
+        var unanswered_questions = this.props.score.getUnAnsweredQuestions();
+
+        if (unanswered_questions.length === 0) {
+            this.props.assess(event);
+            return;
+        }
+
+        var needs_validation = {};
+        unanswered_questions.forEach(function(question, i) {
+            needs_validation[question.name] = true;
+        }, this);
+
+        this.setState({
+            needs_validation: needs_validation
+        })
+    },
+
     handleChange: function(i, event) {
+        var needs_validation = this.state.needs_validation;
+        var question_name = this.props.score.questions[i].name;
+
+        // ran out of time before being able to properly test these kinds of interactions
+        if (typeof needs_validation[question_name] !== undefined) {
+            delete(needs_validation[question_name]);
+            this.setState({
+                needs_validation: needs_validation
+            });
+        }
+
         this.props.score.setAnswer(i, event.target.value);
     },
 
     render: function()  {
         var depression_form = this.props.score.questions.map(function(question, i) {
+            var needs_validation = typeof this.state.needs_validation[question.name] !== 'undefined';
             return (
-                <Ranking name={question.name} order={i} question={question.text} framing_question={this.props.framing_question} key={i} onChange={this.handleChange.bind(this, i)} />
+                <Ranking name={question.name} order={i} question={question.text} framing_question={this.props.framing_question} key={i} onChange={this.handleChange.bind(this, i)} needs_validation={needs_validation} />
             );
         }, this);
 
@@ -18,7 +56,7 @@ module.exports = React.createClass({
             <form>
                 {depression_form}
                 <fieldset>
-                    <input type="submit" value="Assess the severity of your depression" onClick={this.props.assess} />
+                    <input type="submit" value="Assess the severity of your depression" onClick={this.validate} />
                 </fieldset>
             </form>
         );

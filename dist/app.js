@@ -19819,6 +19819,8 @@ var score = new DepressionScore();
 var Therapists = require('./model/therapists')
 var therapists = new Therapists();
 
+// Assessment is the entry point to the application.
+// Trying to do a little bit of IoC here by passing the already defined domain to the main application
 React.render(React.createElement(Assessment, {score: score, therapists: therapists}), document.getElementById('container'));
 
 },{"./model/depression_score":158,"./model/therapists":159,"./views/assessment.jsx":160,"react":156}],158:[function(require,module,exports){
@@ -19882,6 +19884,12 @@ DepressionScore.prototype = {
 
     pretty: function(range) {
         return this.pretty_range[range];
+    },
+
+    getUnAnsweredQuestions: function() {
+        return this.questions.filter(function(question) {
+            return question.score === null;
+        });
     }
 };
 
@@ -19930,12 +19938,18 @@ var RankingForm = require('./ranking_form.jsx');
 var TherapistList = require('./therapist_list.jsx');
 var AssessmentText = require('./assessment_text.jsx');
 
+/**
+ * This object is sort of the controller or marshall for views. Not sure the most reactive way to handle this, but I can
+ * imagine this object growing very quickly and getting very large if care isn't taken to keep it from happening.
+ * I've tried to keep it so that this object delegates basically all but the rendering logic to composed objects
+ */
 module.exports = React.createClass({displayName: "exports",
     getInitialState: function() {
         return {
             show_assessment: false,
             show_therapists: false,
             show_thank_you: false,
+            validation_errors: []
         };
     },
 
@@ -19962,8 +19976,22 @@ module.exports = React.createClass({displayName: "exports",
         });
     },
 
+    /**
+     * Three basic states of the app:
+     * Initial: App just loaded, OR the patient is answering questions but hasn't gotten an assessment yet
+     * Assessment: Patient has answered questions and submitted the form and now has an assessment and optionally, contact information
+     * Thank you: Patient has gotten the assessment and chosen a therapist to talk to
+     */
     render: function()  {
         var class_name = 'assessment-container';
+
+        var ranking_form = (
+            React.createElement(RankingForm, {score: this.props.score, assess: this.assess})
+        );
+
+        var assessment_text = (
+            React.createElement(AssessmentText, {ref: "assessment_text", text: this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))})
+        );
 
         // patient has chosen a therapist to contact
         if (this.state.show_thank_you) {
@@ -19981,18 +20009,20 @@ module.exports = React.createClass({displayName: "exports",
             if (this.state.show_therapists) {
                 return (
                     React.createElement("div", {className: class_name}, 
-                        React.createElement(RankingForm, {score: this.props.score, assess: this.assess}), 
-                        React.createElement(AssessmentText, {ref: "assessment_text", text: this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))}), 
+                        ranking_form, 
+                        assessment_text, 
                         React.createElement(TherapistList, {therapists: this.props.therapists.getTherapists(), handleClick: this.contactTherapist})
                     )
                 );
             }
 
             // patient has submitted the form and has mild or minimal depression
+            // adding the div with a height of 200 px so that when the patient submits the test,
+            // the results aren't hard to see at the very bottom of the page. This moves the results up a little bit higher
             return (
                 React.createElement("div", {className: class_name}, 
-                    React.createElement(RankingForm, {score: this.props.score, assess: this.assess}), 
-                    React.createElement(AssessmentText, {ref: "assessment_text", text: this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))}), 
+                    ranking_form, 
+                    assessment_text, 
                     React.createElement("div", {style: {height: '200px'}}, " ")
                 )
             );
@@ -20001,7 +20031,7 @@ module.exports = React.createClass({displayName: "exports",
         // initial state
         return (
             React.createElement("div", {className: class_name}, 
-                React.createElement(RankingForm, {score: this.props.score, assess: this.assess})
+                ranking_form
             )
         )
     }
@@ -20030,8 +20060,14 @@ module.exports = React.createClass({displayName: "exports",
             this.props.name + '-' + 3,
         ];
 
+        if (this.props.needs_validation) {
+            var validation = (
+                React.createElement("p", {className: "validation-message"}, "Sorry to bother you. To get an accurate assessment, all the questions need to be answered.")
+            )
+        }
+
         return (
-            React.createElement("fieldset", null, 
+            React.createElement("fieldset", {className: this.props.needs_validation ? "needs-validation" : ""}, 
                 React.createElement("ul", null, 
                     React.createElement("li", {className: "framing-question"}, React.createElement("p", null, "In the past two weeks have you...")), 
                     React.createElement("li", null, React.createElement("p", null, this.props.question)), 
@@ -20039,7 +20075,8 @@ module.exports = React.createClass({displayName: "exports",
                     React.createElement("li", null, React.createElement("input", {name: this.props.name, id: ids[1], type: "radio", onChange: this.props.onChange, value: "1"}), React.createElement("label", {htmlFor: ids[1], style: {backgroundColor: 'hsla(76, 18%, 70%, 1)'}}, "Several Days")), 
                     React.createElement("li", null, React.createElement("input", {name: this.props.name, id: ids[2], type: "radio", onChange: this.props.onChange, value: "2"}), React.createElement("label", {htmlFor: ids[2], style: {backgroundColor: 'hsla(41, 18%, 70%, 1)'}}, "More than Half the Days")), 
                     React.createElement("li", null, React.createElement("input", {name: this.props.name, id: ids[3], type: "radio", onChange: this.props.onChange, value: "3"}), React.createElement("label", {htmlFor: ids[3], style: {backgroundColor: 'hsla(10, 18%, 70%, 1)'}}, "Nearly Every Day"))
-                )
+                ), 
+                validation
             )
         );
     }
@@ -20051,14 +20088,52 @@ var React = require('react');
 var Ranking = require('./ranking.jsx');
 
 module.exports = React.createClass({displayName: "exports",
+    getInitialState: function() {
+        return {
+            needs_validation: {}
+        };
+    },
+
+    validate: function(event) {
+        event.preventDefault();
+
+        var unanswered_questions = this.props.score.getUnAnsweredQuestions();
+
+        if (unanswered_questions.length === 0) {
+            this.props.assess(event);
+            return;
+        }
+
+        var needs_validation = {};
+        unanswered_questions.forEach(function(question, i) {
+            needs_validation[question.name] = true;
+        }, this);
+
+        this.setState({
+            needs_validation: needs_validation
+        })
+    },
+
     handleChange: function(i, event) {
+        var needs_validation = this.state.needs_validation;
+        var question_name = this.props.score.questions[i].name;
+
+        // ran out of time before being able to properly test these kinds of interactions
+        if (typeof needs_validation[question_name] !== undefined) {
+            delete(needs_validation[question_name]);
+            this.setState({
+                needs_validation: needs_validation
+            });
+        }
+
         this.props.score.setAnswer(i, event.target.value);
     },
 
     render: function()  {
         var depression_form = this.props.score.questions.map(function(question, i) {
+            var needs_validation = typeof this.state.needs_validation[question.name] !== 'undefined';
             return (
-                React.createElement(Ranking, {name: question.name, order: i, question: question.text, framing_question: this.props.framing_question, key: i, onChange: this.handleChange.bind(this, i)})
+                React.createElement(Ranking, {name: question.name, order: i, question: question.text, framing_question: this.props.framing_question, key: i, onChange: this.handleChange.bind(this, i), needs_validation: needs_validation})
             );
         }, this);
 
@@ -20066,7 +20141,7 @@ module.exports = React.createClass({displayName: "exports",
             React.createElement("form", null, 
                 depression_form, 
                 React.createElement("fieldset", null, 
-                    React.createElement("input", {type: "submit", value: "Assess the severity of your depression", onClick: this.props.assess})
+                    React.createElement("input", {type: "submit", value: "Assess the severity of your depression", onClick: this.validate})
                 )
             )
         );

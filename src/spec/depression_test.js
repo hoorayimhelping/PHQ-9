@@ -155,3 +155,23 @@ test("when determining when to show the assessment", function(t) {
 
     t.end();
 });
+
+test("when getting unanswered questions", function(t) {
+    var score = new DepressionScore();
+
+    t.plan(2);
+
+    t.deepEqual(score.getUnAnsweredQuestions(), score.questions, "every question is unanswered and invalid at instantiation");
+
+    score.setAnswer(0, 1);
+    score.setAnswer(1, 3);
+    score.setAnswer(2, 0);
+    score.setAnswer(3, 2);
+    score.setAnswer(4, 3);
+    score.setAnswer(5, 1);
+    score.setAnswer(6, 2);
+
+    t.deepEqual(score.getUnAnsweredQuestions(), score.questions.slice(7), "Only unanswered questions are invalid");
+
+    t.end();
+});

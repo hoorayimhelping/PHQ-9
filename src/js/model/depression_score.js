@@ -58,6 +58,12 @@ DepressionScore.prototype = {
 
     pretty: function(range) {
         return this.pretty_range[range];
+    },
+
+    getUnAnsweredQuestions: function() {
+        return this.questions.filter(function(question) {
+            return question.score === null;
+        });
     }
 };
 

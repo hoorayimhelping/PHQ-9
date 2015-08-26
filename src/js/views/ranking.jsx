@@ -9,8 +9,14 @@ module.exports = React.createClass({
             this.props.name + '-' + 3,
         ];
 
+        if (this.props.needs_validation) {
+            var validation = (
+                <p className="validation-message">Sorry to bother you. To get an accurate assessment, all the questions need to be answered.</p>
+            )
+        }
+
         return (
-            <fieldset>
+            <fieldset className={this.props.needs_validation ? "needs-validation" : ""}>
                 <ul>
                     <li className="framing-question"><p>In the past two weeks have you...</p></li>
                     <li><p>{this.props.question}</p></li>
@@ -19,6 +25,7 @@ module.exports = React.createClass({
                     <li><input name={this.props.name} id={ids[2]} type="radio" onChange={this.props.onChange} value="2" /><label htmlFor={ids[2]} style={{backgroundColor: 'hsla(41, 18%, 70%, 1)'}}>More than Half the Days</label></li>
                     <li><input name={this.props.name} id={ids[3]} type="radio" onChange={this.props.onChange} value="3" /><label htmlFor={ids[3]} style={{backgroundColor: 'hsla(10, 18%, 70%, 1)'}}>Nearly Every Day</label></li>
                 </ul>
+                {validation}
             </fieldset>
         );
     }
