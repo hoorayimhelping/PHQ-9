@@ -35,4 +35,6 @@ To keep things simple, I worked under the assumption that the user has a fairly 
 
 Based on my own experience with the PHQ-9, I designed the interactions under some specific assumptions: Depression clouds our cognition, problem solving, judgement, self esteem, and reasoning abilities, so the questions should be simple to understand and answer. A lot of the PHQ-9 tests I've taken had awkwardly worded questions and answers which made me unsure how I was responding. To help allieviate these issues, I color coded the possible responses from green to red* (I'm working under the assumption this is going out to a largely American audience). I also tried to make it easy to take action when the lists of therapists are shown.
 
+From the software side of things, I took an iterative approach and was guided philosphically by YAGNI. The scoring system to determine if the depression is severe enough to talk to a therapist about was some of the earliest code I wrote. It's the only real domain logic, so that's where all the tests live. I'm still new to React, and I'm pretty sure this could use some tweaking by someone with a bit more experience.
+
 *I'm not a designer, and these are simple designs that would obviously need to be iterated on. The idea is what I'm trying to convey.
