@@ -29,7 +29,7 @@ var DepressionScore = function() {
 };
 
 DepressionScore.prototype = {
-    getScore: function(score) {
+    getAssessment: function(score) {
         for (var range in this.range) {
             if (score >= this.range[range][0] && score <= this.range[range][1]) {
                 return range;
@@ -44,7 +44,7 @@ DepressionScore.prototype = {
         this.questions[i].score = value;
     },
 
-    sum: function() {
+    getScore: function() {
         return this.questions.map(function(question) {
             return question.score || 0;
         }).reduce(function(previous_score, current_score, i) {

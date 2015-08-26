@@ -14,6 +14,7 @@ module.exports = React.createClass({
 
         var unanswered_questions = this.props.score.getUnAnsweredQuestions();
 
+        // this passes validation, we can assess the responses
         if (unanswered_questions.length === 0) {
             this.props.assess(event);
             return;
@@ -24,6 +25,7 @@ module.exports = React.createClass({
             needs_validation[question.name] = true;
         }, this);
 
+        // scroll to the first node that needs validation
         this.setState({
             needs_validation: needs_validation
         }, function() {

@@ -19855,7 +19855,7 @@ var DepressionScore = function() {
 };
 
 DepressionScore.prototype = {
-    getScore: function(score) {
+    getAssessment: function(score) {
         for (var range in this.range) {
             if (score >= this.range[range][0] && score <= this.range[range][1]) {
                 return range;
@@ -19870,7 +19870,7 @@ DepressionScore.prototype = {
         this.questions[i].score = value;
     },
 
-    sum: function() {
+    getScore: function() {
         return this.questions.map(function(question) {
             return question.score || 0;
         }).reduce(function(previous_score, current_score, i) {
@@ -19956,7 +19956,7 @@ module.exports = React.createClass({displayName: "exports",
     assess: function(event) {
         event.preventDefault();
 
-        var score = this.props.score.sum();
+        var score = this.props.score.getScore();
 
         this.setState({
             'show_assessment': true,
@@ -19990,7 +19990,7 @@ module.exports = React.createClass({displayName: "exports",
         );
 
         var assessment_text = (
-            React.createElement(AssessmentText, {ref: "assessment_text", text: this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))})
+            React.createElement(AssessmentText, {ref: "assessment_text", text: this.props.score.pretty(this.props.score.getAssessment(this.props.score.getScore()))})
         );
 
         // patient has chosen a therapist to contact
@@ -20099,6 +20099,7 @@ module.exports = React.createClass({displayName: "exports",
 
         var unanswered_questions = this.props.score.getUnAnsweredQuestions();
 
+        // this passes validation, we can assess the responses
         if (unanswered_questions.length === 0) {
             this.props.assess(event);
             return;
@@ -20109,6 +20110,7 @@ module.exports = React.createClass({displayName: "exports",
             needs_validation[question.name] = true;
         }, this);
 
+        // scroll to the first node that needs validation
         this.setState({
             needs_validation: needs_validation
         }, function() {

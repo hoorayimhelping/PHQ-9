@@ -22,7 +22,7 @@ module.exports = React.createClass({
     assess: function(event) {
         event.preventDefault();
 
-        var score = this.props.score.sum();
+        var score = this.props.score.getScore();
 
         this.setState({
             'show_assessment': true,
@@ -56,7 +56,7 @@ module.exports = React.createClass({
         );
 
         var assessment_text = (
-            <AssessmentText ref="assessment_text" text={this.props.score.pretty(this.props.score.getScore(this.props.score.sum()))} />
+            <AssessmentText ref="assessment_text" text={this.props.score.pretty(this.props.score.getAssessment(this.props.score.getScore()))} />
         );
 
         // patient has chosen a therapist to contact
