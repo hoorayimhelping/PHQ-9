@@ -245,6 +245,7 @@ input[type=radio]:checked + label:before {
     }
 
     .assessment-container .therapists ul li a {
+        cursor: pointer;
         font-size: 0.90em;
         margin: 15px 0;
         padding: 36px;

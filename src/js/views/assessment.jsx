@@ -22,7 +22,6 @@ module.exports = React.createClass({
             'show_assessment': true,
             'show_therapists': this.props.score.shouldSuggestTherapist(score)
         }, function() {
-            window.scrollTo(0, document.body.scrollHeight);
             React.findDOMNode(this.refs.assessment_text).scrollIntoView();
         });
     },
@@ -40,6 +39,7 @@ module.exports = React.createClass({
     render: function()  {
         var class_name = 'assessment-container';
 
+        // patient has chosen a therapist to contact
         if (this.state.show_thank_you) {
             return (
                 <div className="thank-you">
@@ -49,7 +49,9 @@ module.exports = React.createClass({
             )
         }
 
+        // patient has submitted the form and wants an asssement
         if (this.state.show_assessment) {
+            // patient has moderate depression or worse
             if (this.state.show_therapists) {
                 return (
                     <div className={class_name}>
@@ -60,6 +62,7 @@ module.exports = React.createClass({
                 );
             }
 
+            // patient has submitted the form and has mild or minimal depression
             return (
                 <div className={class_name}>
                     <RankingForm score={this.props.score} assess={this.assess} />
@@ -69,6 +72,7 @@ module.exports = React.createClass({
             );
         }
 
+        // initial state
         return (
             <div className={class_name}>
                 <RankingForm score={this.props.score} assess={this.assess} />
