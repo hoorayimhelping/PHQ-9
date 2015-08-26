@@ -20111,7 +20111,9 @@ module.exports = React.createClass({displayName: "exports",
 
         this.setState({
             needs_validation: needs_validation
-        })
+        }, function() {
+            React.findDOMNode(this.refs[unanswered_questions[0].name]).scrollIntoView();
+        });
     },
 
     handleChange: function(i, event) {
@@ -20133,7 +20135,7 @@ module.exports = React.createClass({displayName: "exports",
         var depression_form = this.props.score.questions.map(function(question, i) {
             var needs_validation = typeof this.state.needs_validation[question.name] !== 'undefined';
             return (
-                React.createElement(Ranking, {name: question.name, order: i, question: question.text, framing_question: this.props.framing_question, key: i, onChange: this.handleChange.bind(this, i), needs_validation: needs_validation})
+                React.createElement(Ranking, {ref: question.name, name: question.name, order: i, question: question.text, framing_question: this.props.framing_question, key: i, onChange: this.handleChange.bind(this, i), needs_validation: needs_validation})
             );
         }, this);
 
