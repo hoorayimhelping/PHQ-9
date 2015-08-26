@@ -1,5 +1,9 @@
 ##Implementation of a mobile-friendly [PHQ-9](https://en.wikipedia.org/wiki/Patient_Health_Questionnaire) questionnaire front-end in React
 
+### How to read this code
+The entry point into the app is `src/js/main.jsx`
+The app is built using [gulpjs](http://gulpjs.com/). The configuration for building is located in the gulpfile `./gulpfile.js`
+
 ###Stories:
 1) As a patient I want to take the PHQ-9 depression screener through my phone (mobile-friendly site) and get the assessment score and what that means.
 
